@@ -23,73 +23,12 @@ export const fetchAllStudentsWithPagination = async (options: {
   return data;
 };
 
-
-export const fetchAllTransferredexamsWithPagination = async (options: {
+export const fetchStudentScripts = async (options: {
   pageIndex: number;
   pageSize: number;
   currentPage: number;
 }) => {
-  const response = await fetch(`${BASE_URL}/transferred-Student/?page=${options.currentPage}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-
-  const data = await response.json();
-  return data;
-};
-
-export const fetchAllexams = async () => {
-  const response = await fetch(`${BASE_URL}/Student/`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-
-  const data = await response.json();
-  return data;
-};
-
-export const fetchAllexamsAnalytics = async () => {
-  const response = await fetch(`${BASE_URL}/Student/exams_analytics/`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-
-  const data = await response.json();
-  return data;
-};
-
-export const fetchAllexamsWithoutPagination = async () => {
-  const response = await fetch(`${BASE_URL}/Student/`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-
-  const data = await response.json();
-  return data;
-};
-
-export const fetchAllexamstatuses = async () => {
-  const response = await fetch(`${BASE_URL}/Student-status/`, {
+  const response = await fetch(`${BASE_URL}/app/student-scripts/?page=${options.currentPage}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -104,130 +43,21 @@ export const fetchAllexamstatuses = async () => {
 };
 
 
-export const fetchAllStudentMode = async () => {
-  const response = await fetch(`${BASE_URL}/Student-mode/`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
 
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-
-  const data = await response.json();
-  return data;
-};
-
-
-export const fetchVirtualConsultationToken = async () => {
-  const response = await fetch(`${BASE_URL}/generate-videosdk-token/`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-
-  const data = await response.json();
-  return data;
-};
-
-
-export const createVirtualConsultation = async () => {
-  const response = await fetch(`${BASE_URL}/create-consultation-room/`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-
-  const data = await response.json();
-  return data;
-};
-
-
-export const fetchAllStudentType = async () => {
-  const response = await fetch(`${BASE_URL}/Student-type/`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-
-  const data = await response.json();
-  return data;
-};
-
-export const fetchStudentById = async (StudentId: any) => {
-  const response = await fetch(`${BASE_URL}/Student/${StudentId}/`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-
-  const data = await response.json();
-  return data;
-};
-
-
-export const fetchTransferredStudentById = async (transferredId: any) => {
-  const response = await fetch(`${BASE_URL}/transferred-Student/${transferredId}/`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-
-  const data = await response.json();
-  return data;
-};
-
-  
-export const fetchStudentAnalytics = async () => {
-  const response = await fetch(`${BASE_URL}/Student-analytics/`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-
-  const data = await response.json();
-  return data;
-};
-
-
-  export const exportAllStudentData = async () => {
-    const response = await fetch(`${BASE_URL}/exams/export-csv/`, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
-  
+export const fetchStudentScriptsByID = async (options: {
+  pageIndex: number;
+  pageSize: number;
+  currentPage: number; studentId: number
+}) => {
+  try {
+    const response = await fetch(`${BASE_URL}/app/student-scripts/${options.studentId}/?page=${options.currentPage}&page_size=${options.pageSize}`);
     if (!response.ok) {
-        throw new Error('Network response was not ok');
+      throw new Error('Failed to fetch student scripts');
     }
-  
-    // Return the raw blob for further handling
-    const blob = await response.blob(); // Parse response as a Blob
-    return blob;
-  };
-
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching student scripts:', error);
+    throw error;
+  }
+};

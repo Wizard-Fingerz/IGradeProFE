@@ -110,7 +110,7 @@ const StudentPage: React.FC = () => {
       headerName: 'Username',
       flex: 1,
       renderCell: (params: GridRenderCellParams) => (
-        <Link to={`/students/${params.row.id}`}>
+        <Link to={`/students/scripts/view/${params.row.id}`}>
           <div>{params.value}</div>
         </Link>
       ),
@@ -120,7 +120,7 @@ const StudentPage: React.FC = () => {
       headerName: 'Full Name',
       flex: 1,
       renderCell: (params: GridRenderCellParams) => (
-        <Link to={`/students/${params.row.id}`}>
+        <Link to={`/students/scripts/view/${params.row.id}`}>
           <div>{`${params.row.first_name} ${params.row.last_name}`}</div>
         </Link>
       ),
@@ -129,31 +129,51 @@ const StudentPage: React.FC = () => {
       field: 'center_number',
       headerName: 'Center Number',
       flex: 1,
-      renderCell: (params: GridRenderCellParams) => <div>{params.value}</div>,
+      renderCell: (params: GridRenderCellParams) => (
+        <Link to={`/students/scripts/view/${params.row.id}`}>
+          <div>{params.value}</div>
+        </Link>
+      ),
     },
     {
       field: 'candidate_number',
       headerName: 'Candidate Number',
       flex: 1,
-      renderCell: (params: GridRenderCellParams) => <div>{params.value}</div>,
+      renderCell: (params: GridRenderCellParams) => (
+        <Link to={`/students/scripts/view/${params.row.id}`}>
+          <div>{params.value}</div>
+        </Link>
+      ),
     },
     {
       field: 'examination_number',
       headerName: 'Examination Number',
       flex: 1,
-      renderCell: (params: GridRenderCellParams) => <div>{params.value}</div>,
+      renderCell: (params: GridRenderCellParams) => (
+        <Link to={`/students/scripts/view/${params.row.id}`}>
+          <div>{params.value}</div>
+        </Link>
+      ),
     },
     {
       field: 'exam_type',
       headerName: 'Exam Type',
       flex: 1,
-      renderCell: (params: GridRenderCellParams) => <div>{params.value}</div>,
+      renderCell: (params: GridRenderCellParams) => (
+        <Link to={`/students/scripts/view/${params.row.id}`}>
+          <div>{params.value}</div>
+        </Link>
+      ),
     },
     {
       field: 'year',
       headerName: 'Year',
       flex: 1,
-      renderCell: (params: GridRenderCellParams) => <div>{params.value}</div>,
+      renderCell: (params: GridRenderCellParams) => (
+        <Link to={`/students/scripts/view/${params.row.id}`}>
+          <div>{params.value}</div>
+        </Link>
+      ),
     },
 
     {
