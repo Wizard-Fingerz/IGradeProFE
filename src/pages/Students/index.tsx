@@ -110,7 +110,7 @@ const StudentPage: React.FC = () => {
       headerName: 'Username',
       flex: 1,
       renderCell: (params: GridRenderCellParams) => (
-        <Link to={`/students/scripts/view/${params.row.id}`}>
+        <Link to={`/students/details/view/${params.row.id}`}>
           <div>{params.value}</div>
         </Link>
       ),
@@ -120,7 +120,7 @@ const StudentPage: React.FC = () => {
       headerName: 'Full Name',
       flex: 1,
       renderCell: (params: GridRenderCellParams) => (
-        <Link to={`/students/scripts/view/${params.row.id}`}>
+        <Link to={`/students/details/view/${params.row.id}`}>
           <div>{`${params.row.first_name} ${params.row.last_name}`}</div>
         </Link>
       ),
@@ -130,7 +130,7 @@ const StudentPage: React.FC = () => {
       headerName: 'Center Number',
       flex: 1,
       renderCell: (params: GridRenderCellParams) => (
-        <Link to={`/students/scripts/view/${params.row.id}`}>
+        <Link to={`/students/details/view/${params.row.id}`}>
           <div>{params.value}</div>
         </Link>
       ),
@@ -140,7 +140,7 @@ const StudentPage: React.FC = () => {
       headerName: 'Candidate Number',
       flex: 1,
       renderCell: (params: GridRenderCellParams) => (
-        <Link to={`/students/scripts/view/${params.row.id}`}>
+        <Link to={`/students/details/view/${params.row.id}`}>
           <div>{params.value}</div>
         </Link>
       ),
@@ -150,7 +150,7 @@ const StudentPage: React.FC = () => {
       headerName: 'Examination Number',
       flex: 1,
       renderCell: (params: GridRenderCellParams) => (
-        <Link to={`/students/scripts/view/${params.row.id}`}>
+        <Link to={`/students/details/view/${params.row.id}`}>
           <div>{params.value}</div>
         </Link>
       ),
@@ -160,7 +160,7 @@ const StudentPage: React.FC = () => {
       headerName: 'Exam Type',
       flex: 1,
       renderCell: (params: GridRenderCellParams) => (
-        <Link to={`/students/scripts/view/${params.row.id}`}>
+        <Link to={`/students/details/view/${params.row.id}`}>
           <div>{params.value}</div>
         </Link>
       ),
@@ -170,7 +170,7 @@ const StudentPage: React.FC = () => {
       headerName: 'Year',
       flex: 1,
       renderCell: (params: GridRenderCellParams) => (
-        <Link to={`/students/scripts/view/${params.row.id}`}>
+        <Link to={`/students/details/view/${params.row.id}`}>
           <div>{params.value}</div>
         </Link>
       ),

@@ -7,7 +7,7 @@ import { fetchStudentScriptsByID } from '../../services/students';
 import CustomInput from '../../components/CustomBorderedInput';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const ViewStudentScripts: React.FC = () => {
+const ViewStudentDetials: React.FC = () => {
     const [user, setUser] = useState<User | null>(null);
     const navigate = useNavigate();
 
@@ -124,7 +124,7 @@ const ViewStudentScripts: React.FC = () => {
                     >
                         Students
                     </Link>
-                    <Typography color="text.primary">Scripts</Typography>
+                    <Typography color="text.primary">Details</Typography>
                     <Typography color="text.primary">Oladiti John - 2445768DGFR</Typography>
                 </Breadcrumbs>
 
@@ -226,4 +226,4 @@ const ViewStudentScripts: React.FC = () => {
     );
 };
 
-export default ViewStudentScripts;
+export default ViewStudentDetials;
