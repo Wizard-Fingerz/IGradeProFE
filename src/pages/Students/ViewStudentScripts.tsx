@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Tabs, Tab, Box, Avatar, Typography, Breadcrumbs, Link } from '@mui/material';
+import { Tabs, Tab, Box, Avatar, Typography, Breadcrumbs, Link, Button } from '@mui/material';
 import CustomDataTable from '../../components/CustomTable/mui';
 import { getProfileDetails } from '../../services/auth/profile';
 import { User } from '../../types/user';
 import { fetchStudentScriptsByID } from '../../services/students';
 import CustomInput from '../../components/CustomBorderedInput';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const ViewStudentScripts: React.FC = () => {
     const [user, setUser] = useState<User | null>(null);
+    const navigate = useNavigate();
 
     const { id } = useParams<{ id: string }>();
     const studentId = id ? parseInt(id, 10) : undefined;
@@ -148,14 +149,31 @@ const ViewStudentScripts: React.FC = () => {
             </Box>
 
 
+            <div className='flex flex-row justify-between items-center'>
 
-            <Tabs value={tabIndex} onChange={handleTabChange} className='mb-4 mt-4'>
-                <Tab label="Subjects" />
-                <Tab label="Scripts" />
-                <Tab label="Bio Data" />
-                <Tab label="Scores" />
-                <Tab label="Results" />
-            </Tabs>
+                <Tabs value={tabIndex} onChange={handleTabChange} className='mb-4 mt-4'>
+                    <Tab label="Subjects" />
+                    <Tab label="Scripts" />
+                    <Tab label="Bio Data" />
+                    <Tab label="Scores" />
+                    <Tab label="Results" />
+                </Tabs>
+
+
+                <Button
+                    variant="contained"
+                    sx={{
+                        backgroundColor: 'primary.main',
+                        color: 'white',
+                        padding: '6px 16px',
+                        marginTop: 2,
+                        borderRadius: 2,
+                    }}
+                    onClick={() => navigate(`/students/scripts/upload/${studentId}`)}
+                >
+                    Upload Script
+                </Button>
+            </div>
             {tabIndex === 0 && (
                 <Box>
                     <CustomDataTable

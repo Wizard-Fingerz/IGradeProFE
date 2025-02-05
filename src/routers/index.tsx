@@ -12,6 +12,7 @@ import EditExam from "../pages/Examination/components/forms/EditExam";
 import CreateExam from "../pages/Examination/components/forms/CreateExam";
 import ViewExam from "../pages/Examination/components/forms/ViewExam";
 import ViewStudentScripts from "../pages/Students/ViewStudentScripts";
+import UploadScriptsByStudent from "../pages/Students/components/forms/UploadScriptsByStudent";
 
 const Dashboard = lazy(() => import("../pages/Dashboard/Dashboard"));
 
@@ -44,6 +45,7 @@ const AppRouter = () => {
             <Route path="exams/edit-exam/:id" element={isAuthenticated ? <EditExam /> : <Navigate to="/index" />} />
             <Route path="exams/view-exam/:id" element={isAuthenticated ? <ViewExam /> : <Navigate to="/index" />} />
             <Route path="/students/scripts/view/:id" element={isAuthenticated ? <ViewStudentScripts /> : <Navigate to="/index" />} />
+            <Route path="/students/scripts/upload/:studentId" element={isAuthenticated ? <UploadScriptsByStudent /> : <Navigate to="/index" />} />
             <Route path="marks" element={isAuthenticated ? <ExaminationPage /> : <Navigate to="/index" />} />
             <Route path="result" element={isAuthenticated ? <ResultPage /> : <Navigate to="/index" />} />
             <Route path="support" element={isAuthenticated ? <ExaminationPage /> : <Navigate to="/index" />} />
