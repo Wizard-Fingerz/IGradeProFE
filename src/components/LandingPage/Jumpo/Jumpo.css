@@ -1,0 +1,51 @@
+.jumpo h1 {
+    position: relative;
+    overflow: hidden;
+    white-space: normal; /* Allow line breaks */
+    max-width: 40vw; /* Set your desired max width */
+    line-height: 1.5; /* Space between lines */
+    height: 60vh;
+}
+
+.jumpo h1::after {
+    content: "";
+    position: absolute;
+    top: 0; /* Initial position */
+    right: 0; /* Initially at the end of the text */
+    width: 2px; /* Cursor width */
+    background-color: black; /* Cursor color */
+    animation: blink 1s infinite; /* Blinking animation */
+}
+
+.typewriter-text {
+    display: inline-block; /* Allows the text to wrap */
+    overflow: hidden; /* Hides overflowing text */
+    white-space: normal; /* Allow line breaks */
+}
+
+.bg-image{
+    image-rendering: pixelated;
+    image-resolution: 1dpi;
+    object-fit: contain;
+    filter: contrast(1.2) brightness(1.1) grayscale(0) invert(0);
+    perspective: 1000px; 
+}
+
+/* Typing effect */
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+/* Deleting effect */
+@keyframes deleting {
+    from { width: 100%; }
+    to { width: 0; }
+}
+
+/* Blinking caret */
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}

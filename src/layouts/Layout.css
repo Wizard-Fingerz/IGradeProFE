@@ -1,0 +1,15 @@
+/* src/App.css */
+.app-container {
+    display: flex;
+  }
+  
+  .main-content {
+    flex: 1;
+    margin-left: 256px; /* This should match the width of the sidebar */
+    padding-top: 4rem; /* Adjust to account for the height of the top navbar */
+  }
+  
+  .content-area {
+    padding: 1rem;
+  }
+  

@@ -1,0 +1,47 @@
+/* global.css */
+:root {
+  --primary-color: #34A85 ;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.App {
+  display: flex;
+  min-height: 100vh;
+}
+
+
+/* globals.css */
+::-webkit-scrollbar {
+  width: 2px;
+  height: 8px;
+  background-color: rgba(1, 59, 9, 0.042);
+  border-radius: px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 44, 12, 0.088);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(4, 34, 0, 0.1);
+  border-radius: 4px;
+}
+
+
+/* src/styles/global.css */
+input:focus {
+  outline: none !important; /* Override default focus outline */
+  border-color: grey !important; /* Ensure border color remains grey */
+}

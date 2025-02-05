@@ -1,0 +1,35 @@
+For the **Examination** section, which involves practicing past questions and taking exams, the following tabs would be useful to organize the content and features efficiently:
+
+### 1. **Practice Questions**
+   - **Purpose**: A section dedicated to past/practice questions for students to prepare for upcoming exams.
+   - **Content**: Categorized past questions by subjects, topics, or exams (e.g., WAEC, UTME).
+   - **Features**: Filters for subjects, years, difficulty levels, and progress tracking for the practice sets.
+
+### 2. **Scheduled Exams**
+   - **Purpose**: Display upcoming exams that are scheduled for the student.
+   - **Content**: Exam date, subject, time, duration, and any instructions.
+   - **Features**: Ability to set reminders and view countdowns for the exams.
+
+### 3. **My Exams/Results**
+   - **Purpose**: A history of the exams taken by the student and their results.
+   - **Content**: Display scores, feedback, and the option to review past answers.
+   - **Features**: Downloadable result sheets, analysis of performance by subject/topic.
+
+### 4. **Mock Tests**
+   - **Purpose**: Simulated exams that mimic the real exam environment.
+   - **Content**: Full-length tests with the same time constraints as real exams.
+   - **Features**: Timers, auto-submit functionality, and a report on completion.
+
+### 5. **Exam Guidelines**
+   - **Purpose**: A dedicated section for rules, tips, and guidelines on how to approach exams.
+   - **Content**: Instructions for online exam conduct, tips for managing time, and technical requirements (e.g., internet connection, device setup).
+   - **Features**: Downloadable guides or videos.
+
+### 6. **Leaderboard/Rankings**
+   - **Purpose**: Track the performance of students across exams and practice tests.
+   - **Content**: Leaderboards showing top performers by subject or overall performance.
+   - **Features**: Filters by class, grade, or subject, and badges for achievements.
+
+---
+
+These tabs ensure that the **Examination** section provides a comprehensive and engaging experience for students, combining preparation, actual exams, and performance tracking. You could also adapt the tabs based on specific functionalities and how much focus you want to put on each area.
