@@ -40,6 +40,15 @@ const NavBar: React.FC<NavBarProps> = ({ transparent = true }) => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    const [openLoginModal, setOpenLoginModal] = useState(false); // Add this state
+
+    // Refresh the page when the login modal is closed
+    useEffect(() => {
+        if (!openLoginModal) {
+            window.location.reload();
+        }
+    }, [openLoginModal]);
+
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -47,8 +56,6 @@ const NavBar: React.FC<NavBarProps> = ({ transparent = true }) => {
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
-
-    const [openLoginModal, setOpenLoginModal] = useState(false); // Add this state
 
     // ... rest of your existing code ...
 

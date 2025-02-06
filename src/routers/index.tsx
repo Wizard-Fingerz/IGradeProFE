@@ -13,6 +13,8 @@ import CreateExam from "../pages/Examination/components/forms/CreateExam";
 import ViewExam from "../pages/Examination/components/forms/ViewExam";
 import UploadScriptsByStudent from "../pages/Students/components/forms/UploadScriptsByStudent";
 import ViewStudentDetials from "../pages/Students/ViewStudentDetials";
+import MarkExamPage from "../pages/MarkExam";
+import UploadScriptZip from "../pages/MarkExam/components/UploadScriptZip";
 
 const Dashboard = lazy(() => import("../pages/Dashboard/Dashboard"));
 
@@ -46,7 +48,8 @@ const AppRouter = () => {
             <Route path="exams/view-exam/:id" element={isAuthenticated ? <ViewExam /> : <Navigate to="/index" />} />
             <Route path="/students/details/view/:id" element={isAuthenticated ? <ViewStudentDetials /> : <Navigate to="/index" />} />
             <Route path="/students/scripts/upload/:studentId" element={isAuthenticated ? <UploadScriptsByStudent /> : <Navigate to="/index" />} />
-            <Route path="marks" element={isAuthenticated ? <ExaminationPage /> : <Navigate to="/index" />} />
+            <Route path="marks" element={isAuthenticated ? <MarkExamPage /> : <Navigate to="/index" />} />
+            <Route path="marks/upload-zip" element={isAuthenticated ? <UploadScriptZip /> : <Navigate to="/index" />} />
             <Route path="result" element={isAuthenticated ? <ResultPage /> : <Navigate to="/index" />} />
             <Route path="support" element={isAuthenticated ? <ExaminationPage /> : <Navigate to="/index" />} />
           </Route>

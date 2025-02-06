@@ -4,13 +4,13 @@ import CustomInput from '../../components/CustomBorderedInput';
 import { getProfileDetails } from '../../services/auth/profile';
 import { User } from '../../types/user';
 import CustomDataTable from '../../components/CustomTable/mui';
-import { Link, useNavigate } from 'react-router-dom';
-import { fetchAllExaminationsWithPagination } from '../../services/exams';
-import { Edit, MoreVert } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
+import { MoreVert } from '@mui/icons-material';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import AnalyticsCard from '../../components/AnalyticsCard';
+import { fetchAllScriptsWithPagination } from '../../services/results';
 
-const ExaminationPage: React.FC = () => {
+const MarkExamPage: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [data, setData] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -22,7 +22,6 @@ const ExaminationPage: React.FC = () => {
   const [networkError, setNetworkError] = React.useState(false); // New state for network error
   const [dataCount, setDataCount] = React.useState(0);
   const [paginationModel, setPaginationModel] = React.useState({ pageSize: 15, page: 0, currentPage: 1 });
-  const navigate = useNavigate();
 
 
 
@@ -46,14 +45,14 @@ const ExaminationPage: React.FC = () => {
       setNetworkError(false);
 
       try {
-        const response = await fetchAllExaminationsWithPagination({
+        const response = await fetchAllScriptsWithPagination({
           pageIndex: paginationModel.page,
           pageSize: paginationModel.pageSize,
           currentPage: paginationModel.currentPage,
 
         });
 
-        setData(response.results);
+        setData(response.MarkExams);
         setDataCount(response.count);
         setHasNextPage(!!response.next);
         setHasPreviousPage(!!response.previous);
@@ -100,87 +99,41 @@ const ExaminationPage: React.FC = () => {
 
   const isMenuOpen = Boolean(anchorEl); // Update this line
 
+
   const columns: GridColDef[] = [
     {
-      field: 'id',
-      headerName: 'ID',
+      field: 'custom_id',
+      headerName: 'MRN',
       flex: 1,
       type: 'string', // Specify the type here
       renderCell: (params: GridRenderCellParams) => (
-        <Link to={`/exams/view-exam/${params.row.id}`}>
+        <Link to={'#'}>
           <div>{params.value}</div>
         </Link>
       ),
     },
-
     {
-      field: 'subject_name',
-      headerName: 'Subject',
+      field: 'patient_name',
+      headerName: 'Patient',
       flex: 1,
       type: 'string',
       renderCell: (params: GridRenderCellParams) => (
-        <Link to={`/exams/view-exam/${params.row.id}`}>
-          <div>{params.value}</div>
+        <Link to={'#'}>
+          <div>
+            {params.value?.map((patient: { full_name: string }, index: React.Key | null) => (
+              <span key={index}>{patient.full_name}</span>
+            ))}
+          </div>
         </Link>
       ),
     },
-
     {
-      field: 'subject_code',
-      headerName: 'Code',
+      field: 'type_name',
+      headerName: 'Type',
       flex: 1,
       type: 'string',
       renderCell: (params: GridRenderCellParams) => (
-        <Link to={`/exams/view-exam/${params.row.id}`}>
-          <div>{params.value}</div>
-        </Link>
-      ),
-    },
-
-    {
-      field: 'question_count',
-      headerName: 'Question Count',
-      flex: 1,
-      type: 'string',
-      renderCell: (params: GridRenderCellParams) => (
-        <Link to={`/exams/view-exam/${params.row.id}`}>
-          <div>{params.value}</div>
-        </Link>
-      ),
-    },
-
-    {
-      field: 'paper_number',
-      headerName: 'Paper Number',
-      flex: 1,
-      type: 'string',
-      renderCell: (params: GridRenderCellParams) => (
-        <Link to={`/exams/view-exam/${params.row.id}`}>
-          <div>{params.value}</div>
-        </Link>
-      ),
-    },
-
-    {
-      field: 'exam_year',
-      headerName: 'Exam Year',
-      flex: 1,
-      type: 'string',
-      renderCell: (params: GridRenderCellParams) => (
-        <Link to={`/exams/view-exam/${params.row.id}`}>
-          <div>{params.value}</div>
-        </Link>
-      ),
-    },
-
-
-    {
-      field: 'exam_type',
-      headerName: 'Exam Type',
-      flex: 1,
-      type: 'string',
-      renderCell: (params: GridRenderCellParams) => (
-        <Link to={`/exams/view-exam/${params.row.id}`}>
+        <Link to={'#'}>
           <div>{params.value}</div>
         </Link>
       ),
@@ -212,19 +165,7 @@ const ExaminationPage: React.FC = () => {
               open={isMenuOpen && selectedRowId === params.row.id} // Check against selectedRowId
               onClose={handleClose}
             >
-              <MenuItem
-                onClick={() => navigate(`/exams/edit-exam/${params.row.id}`)}
-
-              >
-                <span
-                  className='flex flex-row gap-4 text-blue-800 items-center px-2'
-
-                >
-                  <Edit width={20} />
-
-                  Edit Exam
-                </span>
-              </MenuItem>
+              <MenuItem>Edit</MenuItem>
               <MenuItem>Delete</MenuItem>
             </Menu>
           </div>
@@ -232,6 +173,9 @@ const ExaminationPage: React.FC = () => {
       },
     },
   ];
+
+  const sampleVisitedNotes = ['Biology Flashcards', 'Math Chapter 2'];
+
 
   return (
     <Box>
@@ -244,7 +188,7 @@ const ExaminationPage: React.FC = () => {
             marginBottom: { xs: 2, md: 0 }, // Margin bottom on small screens
           }}
         >
-          Examinations
+          MarkExams
         </Typography>
 
 
@@ -268,7 +212,7 @@ const ExaminationPage: React.FC = () => {
       </Box>
 
 
-
+      
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%', gap: 2 }}>
         <Button
           variant="contained"
@@ -279,9 +223,20 @@ const ExaminationPage: React.FC = () => {
             marginTop: 2,
             borderRadius: 2,
           }}
-          onClick={() => navigate('create-exam')}
         >
-          Create New Exam
+          Add Subject
+        </Button>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: 'primary.main',
+            color: 'white',
+            padding: '6px 16px',
+            marginTop: 2,
+            borderRadius: 2,
+          }}
+        >
+          Bulk Upload
         </Button>
       </Box>
 
@@ -292,9 +247,9 @@ const ExaminationPage: React.FC = () => {
         {/* Analytics Cards */}
 
         <Grid item xs={12} md={3}>
-          <AnalyticsCard title="Total Examinations" count={dataCount} />
+          <AnalyticsCard title="Total MarkExams" count={sampleVisitedNotes.length} />
         </Grid>
-
+      
       </Grid>
 
 
@@ -316,4 +271,4 @@ const ExaminationPage: React.FC = () => {
   );
 };
 
-export default ExaminationPage;
+export default MarkExamPage;
