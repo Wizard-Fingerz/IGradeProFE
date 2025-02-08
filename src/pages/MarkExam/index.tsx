@@ -4,7 +4,7 @@ import CustomInput from '../../components/CustomBorderedInput';
 import { getProfileDetails } from '../../services/auth/profile';
 import { User } from '../../types/user';
 import CustomDataTable from '../../components/CustomTable/mui';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { MoreVert } from '@mui/icons-material';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import AnalyticsCard from '../../components/AnalyticsCard';
@@ -22,6 +22,7 @@ const MarkExamPage: React.FC = () => {
   const [networkError, setNetworkError] = React.useState(false); // New state for network error
   const [dataCount, setDataCount] = React.useState(0);
   const [paginationModel, setPaginationModel] = React.useState({ pageSize: 15, page: 0, currentPage: 1 });
+  const navigate = useNavigate();
 
 
 
@@ -216,6 +217,7 @@ const MarkExamPage: React.FC = () => {
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%', gap: 2 }}>
         <Button
           variant="contained"
+          onClick={() => navigate(`/marks/upload-zip/`)}
           sx={{
             backgroundColor: 'primary.main',
             color: 'white',
@@ -224,7 +226,7 @@ const MarkExamPage: React.FC = () => {
             borderRadius: 2,
           }}
         >
-          Add Subject
+          Upload Script
         </Button>
         <Button
           variant="contained"
