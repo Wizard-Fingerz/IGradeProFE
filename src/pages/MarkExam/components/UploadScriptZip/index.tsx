@@ -32,7 +32,7 @@ const UploadScriptZip: React.FC = () => {
                     <Link
                         underline="hover"
                         color="inherit"
-                        href="/students"
+                        href="/marks"
                     >
                         Mark Exam
                     </Link>
@@ -63,7 +63,7 @@ const UploadScriptZip: React.FC = () => {
             <Box >
                 <div className='flex flex-row gap-4'>
                     <UploadScripts />
-                    <Box my={4}>
+                    <Box >
                         <DisplayOutput />
                     </Box>
                 </div>
