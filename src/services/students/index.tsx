@@ -61,3 +61,22 @@ export const fetchStudentScriptsByID = async (options: {
     throw error;
   }
 };
+
+
+export const fetchStudentByID = async (studentId: number) => {
+  try {
+    const response = await fetch(`${BASE_URL}/account/students/${studentId}/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch student details');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching student details:', error);
+    throw error;
+  }
+};

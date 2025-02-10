@@ -43,11 +43,11 @@ const NavBar: React.FC<NavBarProps> = ({ transparent = true }) => {
     const [openLoginModal, setOpenLoginModal] = useState(false); // Add this state
 
     // Refresh the page when the login modal is closed
-    useEffect(() => {
-        if (!openLoginModal) {
-            window.location.reload();
-        }
-    }, [openLoginModal]);
+    // useEffect(() => {
+    //     if (!openLoginModal) {
+    //         window.location.reload();
+    //     }
+    // }, [openLoginModal]);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);

@@ -1,15 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { TextField, Button, CircularProgress, Breadcrumbs, Box, Link, Typography, Avatar } from '@mui/material';
+import { TextField, Button, CircularProgress, Breadcrumbs, Box, Link, Typography, Avatar, Alert } from '@mui/material';
 import { BASE_URL } from '../../../../constant';
 import CustomInput from '../../../../components/CustomBorderedInput';
 import { User } from '../../../../types/user';
 import { getProfileDetails } from '../../../../services/auth/profile';
+import { fetchStudentByID } from '../../../../services/students';
 import { BackButton } from '../../../../components/BackButton';
 
 const UploadScriptsByStudent: React.FC = () => {
     const { studentId } = useParams<{ studentId: string }>();
     const [user, setUser] = useState<User | null>(null);
+    const [student, setStudent] = useState<any>(null);
+    const [error, setError] = useState<string | null>(null);
 
     const [examFilters, setExamFilters] = useState({
         subjectCode: '',
@@ -31,6 +34,19 @@ const UploadScriptsByStudent: React.FC = () => {
         };
         fetchStudentMe();
     }, []);
+
+    useEffect(() => {
+        const fetchStudentDetails = async () => {
+            try {
+                const data = await fetchStudentByID(Number(studentId));
+                setStudent(data);
+            } catch (error) {
+                setError('Failed to fetch student details');
+            }
+        };
+
+        fetchStudentDetails();
+    }, [studentId]);
 
     useEffect(() => {
         const fetchQuestions = async () => {
@@ -113,7 +129,6 @@ const UploadScriptsByStudent: React.FC = () => {
 
     return (
         <Box className="flex flex-col gap-4">
-
             <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                 <Breadcrumbs aria-label="breadcrumb"
                     sx={{
@@ -130,39 +145,38 @@ const UploadScriptsByStudent: React.FC = () => {
                         Students
                     </Link>
                     <Typography color="text.primary">Scripts</Typography>
-                    <Typography color="text.primary">Oladiti John - 2445768DGFR</Typography>
+                    {student && (
+                        <Typography color="text.primary">{student.first_name} {student.last_name} - {student.candidate_number}</Typography>
+                    )}
                 </Breadcrumbs>
 
-
-                <Box sx={
-                    {
-                        display: 'flex',
-                        flexDirection: { xs: 'column', md: 'row' }, // Stack on small screens, row on medium and up
-                        justifyContent: 'space-between',
-
-                    }
-                }>
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: { xs: 'column', md: 'row' }, // Stack on small screens, row on medium and up
+                    justifyContent: 'space-between',
+                }}>
                     <CustomInput />
-
                     <div className="top-navbar-icons">
                         <Avatar src={user?.profile_picture} sx={{ width: 40, height: 40, ml: 2 }} />
                     </div>
-
                 </Box>
-
-
             </Box>
             <BackButton />
 
             <Box className="flex flex-row justify-between gap-4">
                 <Typography color="text.primary">
-
-                    Upload Scripts</Typography>
-                <Button type="submit" variant="contained" color="primary" disabled={isUploading} >
+                    Upload Scripts
+                </Typography>
+                <Button type="submit" variant="contained" color="primary" disabled={isUploading}>
                     {isUploading ? <CircularProgress size={24} /> : 'Upload Answers'}
                 </Button>
             </Box>
 
+            {error && (
+                <Alert severity="error" className="mt-4">
+                    {error}
+                </Alert>
+            )}
 
             <form onSubmit={handleUpload} className="space-y-4 mt-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -234,7 +248,6 @@ const UploadScriptsByStudent: React.FC = () => {
                         </div>
                     ))}
                 </div>
-
             </form>
         </Box>
     );

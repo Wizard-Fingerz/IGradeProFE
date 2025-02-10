@@ -92,7 +92,7 @@ const UploadScripts: React.FC = () => {
     };
 
     return (
-        <div className="p-4 max-w-md mx-auto">
+        <div className="flex flex-col gap-4">
             <Typography variant="h4" className="mb-4">
                 Upload Student Scripts
             </Typography>

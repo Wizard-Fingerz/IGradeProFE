@@ -29,6 +29,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, handleClose }) => {
                     localStorage.setItem('token', authResponse.access); // Save the token
                     navigate('/', { replace: true }); // Redirect to the dashboard
                     handleClose(); // Close the modal
+                    window.location.reload()
                 } else {
                     setError('Login failed. Please check your credentials.');
                 }
