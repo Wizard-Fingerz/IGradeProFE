@@ -9,18 +9,23 @@ import {
     Avatar
 } from '@mui/material';
 import {
-    Inbox as InboxIcon,
+    Dashboard as DashboardIcon,
+    Book as BookIcon,
+    People as PeopleIcon,
+    QuestionAnswer as QuestionAnswerIcon,
+    Assignment as AssignmentIcon,
+    Grade as GradeIcon,
+    Assessment as AssessmentIcon,
     ExitToApp as ExitToAppIcon,
     Menu,
     MenuOpen,
     UnfoldMore,
-    Help
+    Help as HelpIcon
 } from '@mui/icons-material';
 import SidebarItem from '../SideBarItem/SideBarItem';
-import logo from '../../assets/logo.png'
+import logo from '../../assets/logo.png';
 import { getProfileDetails } from '../../services/auth/profile';
 import { User } from '../../types/user';
-
 
 interface SidebarProps {
     isOpen: boolean;
@@ -31,7 +36,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md')); // Use breakpoints for responsiveness
     const [user, setUser] = useState<User | null>(null);
-
 
     useEffect(() => {
         const fetchStudentMe = async () => {
@@ -44,7 +48,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
         };
         fetchStudentMe();
     }, []);
-
 
     return (
         <Box
@@ -69,7 +72,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
         >
             <Box className="sidebar-header" display="flex" alignItems="center" sx={{ padding: 1 }}>
                 {isOpen &&
-
                     <Box sx={{ ml: 2, flexGrow: 1 }}>
                         <img src={logo} alt="Logo" style={{ width: '100%', height: '50%', objectFit: 'contain' }} />
                     </Box>
@@ -97,13 +99,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
                                 <Avatar src={user.profile_picture} sx={{ width: 40, height: 40, mr: 2 }} />
                                 <Box sx={{ ml: 1 }}>
                                     {isOpen && (
-                                        <Typography variant="subtitle1">{user.username}
-                                        </Typography>
+                                        <Typography variant="subtitle1">{user.username}</Typography>
                                     )}
                                 </Box>
                             </Box>
                         )}
-
                     </AccordionSummary>
                     <AccordionDetails id="sidebar-content">
                         {isOpen && (
@@ -117,23 +117,21 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
                 </Accordion>
                 <Divider />
 
-                <SidebarItem icon={<InboxIcon />} label="Dashboard" count={4} isOpen={isOpen} to={'/'} />
+                <SidebarItem icon={<DashboardIcon />} label="Dashboard" count={4} isOpen={isOpen} to={'/'} />
                 <Divider />
-                <SidebarItem icon={<InboxIcon />} label="Subjects" count={4} isOpen={isOpen} to={'/subjects'} />
+                <SidebarItem icon={<BookIcon />} label="Subjects" count={4} isOpen={isOpen} to={'/subjects'} />
                 <Divider />
-                <SidebarItem icon={<InboxIcon />} label="Students" count={4} isOpen={isOpen} to={'/students'} />
+                <SidebarItem icon={<PeopleIcon />} label="Students" count={4} isOpen={isOpen} to={'/students'} />
                 <Divider />
-                <SidebarItem icon={<InboxIcon />} label="Questions" count={4} isOpen={isOpen} to={'/questions'} />
+                <SidebarItem icon={<QuestionAnswerIcon />} label="Questions" count={4} isOpen={isOpen} to={'/questions'} />
                 <Divider />
-                <SidebarItem icon={<InboxIcon />} label="Exams" count={4} isOpen={isOpen} to={'/exams'} />
+                <SidebarItem icon={<AssignmentIcon />} label="Exams" count={4} isOpen={isOpen} to={'/exams'} />
                 <Divider />
-                <SidebarItem icon={<InboxIcon />} label="Mark Exam" count={4} isOpen={isOpen} to={'/marks'} />
+                <SidebarItem icon={<GradeIcon />} label="Mark Exam" count={4} isOpen={isOpen} to={'/marks'} />
                 <Divider />
-                <SidebarItem icon={<InboxIcon />} label="Result" count={4} isOpen={isOpen} to={'/result'} />
+                <SidebarItem icon={<AssessmentIcon />} label="Result" count={4} isOpen={isOpen} to={'/result'} />
                 <Divider />
-                <SidebarItem icon={<Help />} label="Help & Support" isOpen={isOpen} to={'support'} />
-
-
+                <SidebarItem icon={<HelpIcon />} label="Help & Support" isOpen={isOpen} to={'support'} />
             </Box>
 
             <Box sx={{ p: 2, width: '100%', textAlign: 'center', position: 'absolute', bottom: 0 }}>

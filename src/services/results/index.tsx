@@ -9,7 +9,7 @@ export const fetchAllResultsWithPagination = async (options: {
   pageSize: number;
   currentPage: number;
 }) => {
-  const response = await fetch(`${BASE_URL}/exams/?page=${options.currentPage}`, {
+  const response = await fetch(`${BASE_URL}/exam-results/?page=${options.currentPage}`, {
     headers: {
       Authorization: `Token ${token}`,
     },
@@ -29,7 +29,7 @@ export const fetchAllScriptsWithPagination = async (options: {
   pageSize: number;
   currentPage: number;
 }) => {
-  const response = await fetch(`${BASE_URL}/transferred-Result/?page=${options.currentPage}`, {
+  const response = await fetch(`${BASE_URL}/exam-results/?page=${options.currentPage}`, {
     headers: {
       Authorization: `Token ${token}`,
     },

@@ -109,6 +109,13 @@ const ViewStudentDetials: React.FC = () => {
         // Add more columns as needed
     ];
 
+    // Dummy statistics data
+    const statistics = {
+        subjects: 5,
+        passedExams: 3,
+        failedExams: 2,
+    };
+
     return (
         <Box>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', mb: 4 }}>
@@ -144,9 +151,9 @@ const ViewStudentDetials: React.FC = () => {
                 </Box>
             </Box>
 
-            <Paper elevation={0} sx={{ p: 3, mb: 4 }}>
+            <Paper elevation={3} sx={{ p: 3, mb: 4 }}>
                 <Grid container spacing={2}>
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={12} md={4}>
                         {student && (
                             <Box>
                                 <Typography variant="body1"><strong>Name:</strong> {student.first_name} {student.last_name}</Typography>
@@ -158,9 +165,17 @@ const ViewStudentDetials: React.FC = () => {
                             </Box>
                         )}
                     </Grid>
-                    <Grid item xs={12} md={6} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+                    <Grid item xs={12} md={4}>
+                        <Box>
+                            <Typography variant="body1"><strong>Number of Subjects Offered:</strong> {statistics.subjects}</Typography>
+                            <Typography variant="body1"><strong>Number of Subjects Graded:</strong> {statistics.subjects}</Typography>
+                            <Typography variant="body1"><strong>Passed Exams:</strong> {statistics.passedExams}</Typography>
+                            <Typography variant="body1"><strong>Failed Exams:</strong> {statistics.failedExams}</Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12} md={4} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
                         <Box className="flex flex-col gap-1">
-                            <Button
+                             <Button
                                 variant="contained"
                                 sx={{
                                     backgroundColor: 'primary.main',
@@ -244,7 +259,10 @@ const ViewStudentDetials: React.FC = () => {
                     />
                 </Box>
             )}
-            {tabIndex === 3 && (
+
+         
+
+            {tabIndex === 2 && (
                 <Box>
                     {/* Add components or code to display student's scores */}
                     <Typography variant="h6">Scores</Typography>
@@ -253,7 +271,7 @@ const ViewStudentDetials: React.FC = () => {
                 </Box>
             )}
 
-            {tabIndex === 4 && (
+            {tabIndex === 3 && (
                 <Box>
                     {/* Add components or code to display student's results */}
                     <Typography variant="h6">Results</Typography>
