@@ -67,6 +67,8 @@ const ResultPage: React.FC = () => {
     fetchData();
   }, [pageIndex, pageSize, currentPage, paginationModel]);
 
+
+  
   const handlePaginationModelChange = (model: { pageSize: number; page: number; currentPage: number }) => {
     // Update the pagination model state
     setPaginationModel(model);

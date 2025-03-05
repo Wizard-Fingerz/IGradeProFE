@@ -8,7 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { MoreVert } from '@mui/icons-material';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import AnalyticsCard from '../../components/AnalyticsCard';
-import { fetchAllScriptsWithPagination } from '../../services/results';
+import { fetchAllResultsWithPagination } from '../../services/results';
 
 const MarkExamPage: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -39,6 +39,7 @@ const MarkExamPage: React.FC = () => {
 
 
 
+
   React.useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -46,14 +47,14 @@ const MarkExamPage: React.FC = () => {
       setNetworkError(false);
 
       try {
-        const response = await fetchAllScriptsWithPagination({
+        const response = await fetchAllResultsWithPagination({
           pageIndex: paginationModel.page,
           pageSize: paginationModel.pageSize,
           currentPage: paginationModel.currentPage,
 
         });
 
-        setData(response.MarkExams);
+        setData(response.results);
         setDataCount(response.count);
         setHasNextPage(!!response.next);
         setHasPreviousPage(!!response.previous);
@@ -67,6 +68,10 @@ const MarkExamPage: React.FC = () => {
 
     fetchData();
   }, [pageIndex, pageSize, currentPage, paginationModel]);
+
+
+  
+
 
   const handlePaginationModelChange = (model: { pageSize: number; page: number; currentPage: number }) => {
     // Update the pagination model state
@@ -101,10 +106,11 @@ const MarkExamPage: React.FC = () => {
   const isMenuOpen = Boolean(anchorEl); // Update this line
 
 
+
   const columns: GridColDef[] = [
     {
-      field: 'custom_id',
-      headerName: 'MRN',
+      field: 'candidate_number',
+      headerName: 'Candidate Number',
       flex: 1,
       type: 'string', // Specify the type here
       renderCell: (params: GridRenderCellParams) => (
@@ -114,24 +120,23 @@ const MarkExamPage: React.FC = () => {
       ),
     },
     {
-      field: 'patient_name',
-      headerName: 'Patient',
-      flex: 1,
+      field: 'question_text',
+      headerName: 'Question',
+      flex: 2,
       type: 'string',
       renderCell: (params: GridRenderCellParams) => (
         <Link to={'#'}>
           <div>
-            {params.value?.map((patient: { full_name: string }, index: React.Key | null) => (
-              <span key={index}>{patient.full_name}</span>
-            ))}
+            {params.value}
+
           </div>
         </Link>
       ),
     },
     {
-      field: 'type_name',
-      headerName: 'Type',
-      flex: 1,
+      field: 'student_answer',
+      headerName: 'Student Answer',
+      flex: 2,
       type: 'string',
       renderCell: (params: GridRenderCellParams) => (
         <Link to={'#'}>
@@ -139,12 +144,36 @@ const MarkExamPage: React.FC = () => {
         </Link>
       ),
     },
+    {
+      field: 'student_score',
+      headerName: 'Student Score',
+      flex: 0.5,
+      type: 'string',
+      renderCell: (params: GridRenderCellParams) => (
+        <Link to={'#'}>
+          <div>{params.value}</div>
+        </Link>
+      ),
+    },
+
+    {
+      field: 'similarity_score_percentage',
+      headerName: 'Similarity Score',
+      flex: 0.5,
+      type: 'string',
+      renderCell: (params: GridRenderCellParams) => (
+        <Link to={'#'}>
+          <div>{params.value}</div>
+        </Link>
+      ),
+    },
+
     // Repeat for other columns...
 
     {
       field: 'actions',
       headerName: 'Actions',
-      flex: 1, // Fixed width
+      flex: 0.5, // Fixed width
       renderCell: (params: GridRenderCellParams) => {
         const handleClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
           // Handle the click to open the menu
@@ -174,8 +203,6 @@ const MarkExamPage: React.FC = () => {
       },
     },
   ];
-
-  const sampleVisitedNotes = ['Biology Flashcards', 'Math Chapter 2'];
 
 
   return (
@@ -214,33 +241,10 @@ const MarkExamPage: React.FC = () => {
 
 
       
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%', gap: 2 }}>
-        <Button
-          variant="contained"
-          onClick={() => navigate(`/marks/upload-zip/`)}
-          sx={{
-            backgroundColor: 'primary.main',
-            color: 'white',
-            padding: '6px 16px',
-            marginTop: 2,
-            borderRadius: 2,
-          }}
-        >
-          Upload Script
-        </Button>
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: 'primary.main',
-            color: 'white',
-            padding: '6px 16px',
-            marginTop: 2,
-            borderRadius: 2,
-          }}
-        >
-          Bulk Upload
-        </Button>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%', height: '50px', gap: 2 }}>
+       
       </Box>
+
 
 
 
@@ -249,9 +253,9 @@ const MarkExamPage: React.FC = () => {
         {/* Analytics Cards */}
 
         <Grid item xs={12} md={3}>
-          <AnalyticsCard title="Total MarkExams" count={sampleVisitedNotes.length} />
+          <AnalyticsCard title="Total Exam Mark" count={dataCount} />
         </Grid>
-      
+
       </Grid>
 
 
