@@ -5,7 +5,7 @@ import { getProfileDetails } from '../../services/auth/profile';
 import { User } from '../../types/user';
 import CustomDataTable from '../../components/CustomTable/mui';
 import { Link } from 'react-router-dom';
-import { fetchAllResultsWithPagination } from '../../services/results';
+import { fetchAllScoresWithPagination } from '../../services/results';
 import { MoreVert } from '@mui/icons-material';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import AnalyticsCard from '../../components/AnalyticsCard';
@@ -45,7 +45,7 @@ const ResultPage: React.FC = () => {
       setNetworkError(false);
 
       try {
-        const response = await fetchAllResultsWithPagination({
+        const response = await fetchAllScoresWithPagination({
           pageIndex: paginationModel.page,
           pageSize: paginationModel.pageSize,
           currentPage: paginationModel.currentPage,
@@ -68,7 +68,7 @@ const ResultPage: React.FC = () => {
   }, [pageIndex, pageSize, currentPage, paginationModel]);
 
 
-  
+
   const handlePaginationModelChange = (model: { pageSize: number; page: number; currentPage: number }) => {
     // Update the pagination model state
     setPaginationModel(model);
@@ -104,9 +104,9 @@ const ResultPage: React.FC = () => {
 
   const columns: GridColDef[] = [
     {
-      field: 'candidate_number',
-      headerName: 'Candidate Number',
-      flex: 1,
+      field: 'student_detials',
+      headerName: 'Candidate',
+      flex: 2,
       type: 'string', // Specify the type here
       renderCell: (params: GridRenderCellParams) => (
         <Link to={'#'}>
@@ -115,9 +115,9 @@ const ResultPage: React.FC = () => {
       ),
     },
     {
-      field: 'question_text',
-      headerName: 'Question',
-      flex: 2,
+      field: 'subject_detials',
+      headerName: 'Subject',
+      flex: 4,
       type: 'string',
       renderCell: (params: GridRenderCellParams) => (
         <Link to={'#'}>
@@ -129,8 +129,8 @@ const ResultPage: React.FC = () => {
       ),
     },
     {
-      field: 'student_answer',
-      headerName: 'Student Answer',
+      field: 'grade',
+      headerName: 'Grade',
       flex: 2,
       type: 'string',
       renderCell: (params: GridRenderCellParams) => (
@@ -140,9 +140,9 @@ const ResultPage: React.FC = () => {
       ),
     },
     {
-      field: 'student_score',
-      headerName: 'Student Score',
-      flex: 0.5,
+      field: 'percentage_score',
+      headerName: 'Percentage Score',
+      flex: 2,
       type: 'string',
       renderCell: (params: GridRenderCellParams) => (
         <Link to={'#'}>
@@ -152,9 +152,20 @@ const ResultPage: React.FC = () => {
     },
 
     {
-      field: 'similarity_score_percentage',
-      headerName: 'Similarity Score',
-      flex: 0.5,
+      field: 'exam_score',
+      headerName: 'Score',
+      flex: 2,
+      type: 'string',
+      renderCell: (params: GridRenderCellParams) => (
+        <Link to={'#'}>
+          <div>{params.value}</div>
+        </Link>
+      ),
+    },
+    {
+      field: 'effective_total_marks',
+      headerName: 'Effective Total Mark',
+      flex: 2,
       type: 'string',
       renderCell: (params: GridRenderCellParams) => (
         <Link to={'#'}>
@@ -168,7 +179,7 @@ const ResultPage: React.FC = () => {
     {
       field: 'actions',
       headerName: 'Actions',
-      flex: 0.5, // Fixed width
+      flex: 2, // Fixed width
       renderCell: (params: GridRenderCellParams) => {
         const handleClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
           // Handle the click to open the menu
