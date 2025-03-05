@@ -117,19 +117,19 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
                 </Accordion>
                 <Divider />
 
-                <SidebarItem icon={<DashboardIcon />} label="Dashboard" count={4} isOpen={isOpen} to={'/'} />
+                <SidebarItem icon={<DashboardIcon />} label="Dashboard" isOpen={isOpen} to={'/'} />
                 <Divider />
-                <SidebarItem icon={<BookIcon />} label="Subjects" count={4} isOpen={isOpen} to={'/subjects'} />
+                <SidebarItem icon={<BookIcon />} label="Subjects" isOpen={isOpen} to={'/subjects'} />
                 <Divider />
-                <SidebarItem icon={<PeopleIcon />} label="Students" count={4} isOpen={isOpen} to={'/students'} />
+                <SidebarItem icon={<PeopleIcon />} label="Students" isOpen={isOpen} to={'/students'} />
                 <Divider />
-                <SidebarItem icon={<QuestionAnswerIcon />} label="Questions" count={4} isOpen={isOpen} to={'/questions'} />
+                <SidebarItem icon={<QuestionAnswerIcon />} label="Questions" isOpen={isOpen} to={'/questions'} />
                 <Divider />
-                <SidebarItem icon={<AssignmentIcon />} label="Exams" count={4} isOpen={isOpen} to={'/exams'} />
+                <SidebarItem icon={<AssignmentIcon />} label="Exams" isOpen={isOpen} to={'/exams'} />
                 <Divider />
-                <SidebarItem icon={<GradeIcon />} label="Mark Exam" count={4} isOpen={isOpen} to={'/marks'} />
+                <SidebarItem icon={<GradeIcon />} label="Mark Exam" isOpen={isOpen} to={'/marks'} />
                 <Divider />
-                <SidebarItem icon={<AssessmentIcon />} label="Result" count={4} isOpen={isOpen} to={'/result'} />
+                <SidebarItem icon={<AssessmentIcon />} label="Result" isOpen={isOpen} to={'/result'} />
                 <Divider />
                 <SidebarItem icon={<HelpIcon />} label="Help & Support" isOpen={isOpen} to={'support'} />
             </Box>
