@@ -242,11 +242,20 @@ const MarkExamPage: React.FC = () => {
 
       
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%', height: '50px', gap: 2 }}>
-       
+             <Button
+          variant="contained"
+          sx={{
+            backgroundColor: 'primary.main',
+            color: 'white',
+            padding: '6px 16px',
+            marginTop: 2,
+            borderRadius: 2,
+          }}
+          onClick={() => navigate('/marks/upload-zip')}
+        >
+          Upload Scripts
+        </Button>
       </Box>
-
-
-
 
       <Grid container spacing={4} sx={{ mb: 5 }}>
 
