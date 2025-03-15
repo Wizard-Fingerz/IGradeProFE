@@ -54,11 +54,12 @@ const ExaminationPage: React.FC = () => {
         });
 
         setData(response.results);
+
         setDataCount(response.count);
         setHasNextPage(!!response.next);
         setHasPreviousPage(!!response.previous);
       } catch (error) {
-        console.error('Error fetching appointments:', error);
+        console.error('Error fetching results:', error);
         setNetworkError(true);
       } finally {
         setIsLoading(false);
@@ -66,29 +67,14 @@ const ExaminationPage: React.FC = () => {
     };
 
     fetchData();
-  }, [pageIndex, pageSize, currentPage, paginationModel]);
 
-  const handlePaginationModelChange = (model: { pageSize: number; page: number; currentPage: number }) => {
-    // Update the pagination model state
-    setPaginationModel(model);
-    setPageIndex(model.page); // Update the current page index (0-based)
-    setCurrentPage(model.currentPage + 1); // Update the current page (1-based)
+  }, [paginationModel]);
 
-    // Check if there is a next page
-    if (hasNextPage) {
-      const newPage = model.page + 1; // Increment page
-      setPaginationModel(prev => ({ ...prev, page: newPage, currentPage: newPage + 1 }));
-      setPageIndex(newPage);
-      setCurrentPage(newPage + 1);
-    }
 
-    // Check if there is a previous page
-    if (hasPreviousPage) {
-      const newPage = model.page - 1; // Decrement page
-      setPaginationModel(prev => ({ ...prev, page: newPage, currentPage: newPage + 1 }));
-      setPageIndex(newPage);
-      setCurrentPage(newPage + 1);
-    }
+  
+  const handlePaginationModelChange = (model: { pageSize: number; page: number }) => {
+    const newPage = model.page + 1; // Convert 0-based index to 1-based currentPage
+    setPaginationModel(prev => ({ ...prev, page: model.page, pageSize: model.pageSize, currentPage: newPage }));
   };
 
 
@@ -308,7 +294,7 @@ const ExaminationPage: React.FC = () => {
           isLoading={isLoading}
           isError={networkError}
           paginationModel={paginationModel}
-          onPaginationModelChange={() => handlePaginationModelChange}
+          onPaginationModelChange={handlePaginationModelChange}
 
         />
       </Box>
