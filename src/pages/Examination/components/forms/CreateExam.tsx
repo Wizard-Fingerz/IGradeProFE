@@ -122,6 +122,14 @@ const CreateExam: React.FC = () => {
                         question_number: subQuestion.serial,
                         examiner_answer: subQuestion.examiner_answer,
                         question_score: subQuestion.question_score,
+                        sub_sub_questions: subQuestion.sub_sub_questions.map((subSubQuestion) => ({
+                            comprehension: subSubQuestion.comprehension,
+                            question: subSubQuestion.question,
+                            question_number: subSubQuestion.serial,
+                            examiner_answer: subSubQuestion.examiner_answer,
+                            question_score: subSubQuestion.question_score,
+                        }
+                        )),
                     })),
                 })),
             };
@@ -458,7 +466,7 @@ const CreateExam: React.FC = () => {
                                 <TextField
                                     label="Examiner Answer"
                                     value={question.examiner_answer}
-                                    onChange={(e) => handleQuestionChange(parentIndex, 'examiner_answer', e.target.value)}
+                                    onChange={(e) => handleSubQuestionChange(parentIndex, subIndex, 'examiner_answer', e.target.value)}
                                     fullWidth
                                     multiline
                                     rows={2}
@@ -467,7 +475,7 @@ const CreateExam: React.FC = () => {
                                     label="Question Score"
                                     type="number"
                                     value={question.question_score}
-                                    onChange={(e) => handleQuestionChange(parentIndex, 'question_score', Math.max(0, Number(e.target.value)))}
+                                    onChange={(e) => handleSubQuestionChange(parentIndex, subIndex, 'question_score', Math.max(0, Number(e.target.value)))}
                                     inputProps={{ min: 0 }}
                                     fullWidth
                                 />
@@ -505,7 +513,7 @@ const CreateExam: React.FC = () => {
                                         <TextField
                                             label="Examiner Answer"
                                             value={question.examiner_answer}
-                                            onChange={(e) => handleQuestionChange(parentIndex, 'examiner_answer', e.target.value)}
+                                            onChange={(e) => handleSubSubQuestionChange(parentIndex, subIndex, index, 'examiner_answer', e.target.value)}
                                             fullWidth
                                             multiline
                                             rows={2}
@@ -514,7 +522,7 @@ const CreateExam: React.FC = () => {
                                             label="Question Score"
                                             type="number"
                                             value={question.question_score}
-                                            onChange={(e) => handleQuestionChange(parentIndex, 'question_score', Math.max(0, Number(e.target.value)))}
+                                            onChange={(e) => handleSubSubQuestionChange(parentIndex, subIndex, index, 'question_score', Math.max(0, Number(e.target.value)))}
                                             inputProps={{ min: 0 }}
                                             fullWidth
                                         />

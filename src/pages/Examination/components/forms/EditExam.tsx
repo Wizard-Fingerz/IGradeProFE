@@ -12,6 +12,15 @@ import { useParams } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 
 
+
+interface SubSubQuestion {
+    serial: string;
+    comprehension: string;
+    question: string;
+    examiner_answer: string;
+    question_score: string;
+}
+
 interface SubQuestion {
     serial: string;
     comprehension: string;
@@ -19,6 +28,7 @@ interface SubQuestion {
     examiner_answer: string;
     question_score: string;
     is_optional: boolean;
+    sub_sub_questions: SubSubQuestion[]; // Add this property
 }
 
 interface Question {
@@ -122,6 +132,14 @@ const EditExam: React.FC = () => {
                         question_number: subQuestion.serial,
                         examiner_answer: subQuestion.examiner_answer,
                         question_score: subQuestion.question_score,
+                        sub_sub_questions: subQuestion.sub_sub_questions.map((subSubQuestion) => ({
+                            comprehension: subSubQuestion.comprehension,
+                            question: subSubQuestion.question,
+                            question_number: subSubQuestion.serial,
+                            examiner_answer: subSubQuestion.examiner_answer,
+                            question_score: subSubQuestion.question_score,
+                        }
+                        )),
                     })),
                 })),
             };
@@ -168,6 +186,13 @@ const EditExam: React.FC = () => {
         fetchSubjects();
     }, []);
 
+    const handleSubSubQuestionChange = (parentIndex: number, subIndex: number, index: number, field: keyof SubSubQuestion, value: any) => {
+        const updatedQuestions = [...examData.questions];
+        (updatedQuestions[parentIndex].sub_questions[subIndex].sub_sub_questions[index] as any)[field] = value;
+        setExamData({ ...examData, questions: updatedQuestions });
+    };
+
+
     const handleQuestionChange = (index: number, field: keyof Question, value: any) => {
         const updatedQuestions = [...examData.questions];
         (updatedQuestions[index] as any)[field] = value;
@@ -195,6 +220,7 @@ const EditExam: React.FC = () => {
             examiner_answer: '',
             question_score: '',
             is_optional: updatedQuestions[parentIndex].is_optional,
+            sub_sub_questions: []
         };
         updatedQuestions[parentIndex].sub_questions.push(newSubQuestion);
         setExamData({ ...examData, questions: updatedQuestions });
@@ -203,6 +229,28 @@ const EditExam: React.FC = () => {
     const removeSubQuestion = (parentIndex: number, index: number) => {
         const updatedQuestions = [...examData.questions];
         updatedQuestions[parentIndex].sub_questions.splice(index, 1);
+        setExamData({ ...examData, questions: updatedQuestions });
+    };
+
+
+    const addSubSubQuestion = (parentIndex: number, subIndex: number) => {
+        const updatedQuestions = [...examData.questions];
+        const subSubQuestions = updatedQuestions[parentIndex].sub_questions[subIndex].sub_sub_questions;
+        const newSerial = `${updatedQuestions[parentIndex].sub_questions[subIndex].serial}${subSubQuestions.length + 2}`; // Start with i, ii, iii...
+        const newSubSubQuestion: SubSubQuestion = {
+            serial: newSerial,
+            comprehension: '',
+            question: '',
+            examiner_answer: '',
+            question_score: '',
+        };
+        subSubQuestions.push(newSubSubQuestion);
+        setExamData({ ...examData, questions: updatedQuestions });
+    };
+
+    const removeSubSubQuestion = (parentIndex: number, subIndex: number, index: number) => {
+        const updatedQuestions = [...examData.questions];
+        updatedQuestions[parentIndex].sub_questions[subIndex].sub_sub_questions.splice(index, 1);
         setExamData({ ...examData, questions: updatedQuestions });
     };
 
@@ -222,6 +270,7 @@ const EditExam: React.FC = () => {
         updatedQuestions.splice(index, 1);
         setExamData({ ...examData, questions: updatedQuestions });
     };
+
 
     return (
         <Container className='flex flex-col gap-4'>
@@ -393,19 +442,18 @@ const EditExam: React.FC = () => {
                         <Button onClick={() => removeQuestion(parentIndex)} variant="contained" color="secondary">
                             Remove Question
                         </Button>
-
-                        {question.sub_questions.map((subQuestion, index) => (
-                            <Box key={index} mt={2} p={2} border={1} borderRadius={4} className='flex flex-col gap-4'>
+                        {question.sub_questions.map((subQuestion, subIndex) => (
+                            <Box key={subIndex} mt={2} p={2} border={1} borderRadius={4} className='flex flex-col gap-4'>
                                 <TextField
                                     label="Sub-Question Number"
                                     value={subQuestion.serial}
-                                    onChange={(e) => handleSubQuestionChange(parentIndex, index, 'serial', e.target.value)}
+                                    onChange={(e) => handleSubQuestionChange(parentIndex, subIndex, 'serial', e.target.value)}
                                     fullWidth
                                 />
                                 <TextField
                                     label="Comprehension"
                                     value={subQuestion.comprehension}
-                                    onChange={(e) => handleSubQuestionChange(parentIndex, index, 'comprehension', e.target.value)}
+                                    onChange={(e) => handleSubQuestionChange(parentIndex, subIndex, 'comprehension', e.target.value)}
                                     fullWidth
                                     multiline
                                     rows={2}
@@ -413,34 +461,85 @@ const EditExam: React.FC = () => {
                                 <TextField
                                     label="Sub-Question"
                                     value={subQuestion.question}
-                                    onChange={(e) => handleSubQuestionChange(parentIndex, index, 'question', e.target.value)}
+                                    onChange={(e) => handleSubQuestionChange(parentIndex, subIndex, 'question', e.target.value)}
                                     fullWidth
                                     multiline
                                     rows={2}
                                 />
                                 <TextField
                                     label="Examiner Answer"
-                                    value={subQuestion.examiner_answer}
-                                    onChange={(e) => handleSubQuestionChange(parentIndex, index, 'examiner_answer', e.target.value)}
+                                    value={question.examiner_answer}
+                                    onChange={(e) => handleSubQuestionChange(parentIndex, subIndex, 'examiner_answer', e.target.value)}
                                     fullWidth
                                     multiline
                                     rows={2}
                                 />
                                 <TextField
-                                    label="Sub-Question Score"
+                                    label="Question Score"
                                     type="number"
-                                    value={subQuestion.question_score}
-                                    onChange={(e) => handleSubQuestionChange(parentIndex, index, 'question_score', Math.max(0, Number(e.target.value)))}
+                                    value={question.question_score}
+                                    onChange={(e) => handleSubQuestionChange(parentIndex, subIndex, 'question_score', Math.max(0, Number(e.target.value)))}
                                     inputProps={{ min: 0 }}
                                     fullWidth
                                 />
-                                <Button onClick={() => removeSubQuestion(parentIndex, index)} variant="contained" color="secondary">
+                                <Button onClick={() => addSubSubQuestion(parentIndex, subIndex)} variant="contained" color="primary">
+                                    Add Sub-Sub-Question
+                                </Button>
+                                <Button onClick={() => removeSubQuestion(parentIndex, subIndex)} variant="contained" color="secondary">
                                     Remove Sub-Question
                                 </Button>
+
+                                {subQuestion.sub_sub_questions.map((subSubQuestion, index) => (
+                                    <Box key={index} mt={2} p={2} border={1} borderRadius={4} className='flex flex-col gap-4'>
+                                        <TextField
+                                            label="Sub-Sub-Question Number"
+                                            value={subSubQuestion.serial}
+                                            onChange={(e) => handleSubSubQuestionChange(parentIndex, subIndex, index, 'serial', e.target.value)}
+                                            fullWidth
+                                        />
+                                        <TextField
+                                            label="Comprehension"
+                                            value={subSubQuestion.comprehension}
+                                            onChange={(e) => handleSubSubQuestionChange(parentIndex, subIndex, index, 'comprehension', e.target.value)}
+                                            fullWidth
+                                            multiline
+                                            rows={2}
+                                        />
+                                        <TextField
+                                            label="Sub-Sub-Question"
+                                            value={subSubQuestion.question}
+                                            onChange={(e) => handleSubSubQuestionChange(parentIndex, subIndex, index, 'question', e.target.value)}
+                                            fullWidth
+                                            multiline
+                                            rows={2}
+                                        />
+                                        <TextField
+                                            label="Examiner Answer"
+                                            value={question.examiner_answer}
+                                            onChange={(e) => handleSubSubQuestionChange(parentIndex, subIndex, index, 'examiner_answer', e.target.value)}
+                                            fullWidth
+                                            multiline
+                                            rows={2}
+                                        />
+                                        <TextField
+                                            label="Question Score"
+                                            type="number"
+                                            value={question.question_score}
+                                            onChange={(e) => handleSubSubQuestionChange(parentIndex, subIndex, index, 'question_score', Math.max(0, Number(e.target.value)))}
+                                            inputProps={{ min: 0 }}
+                                            fullWidth
+                                        />
+                                        <Button onClick={() => removeSubSubQuestion(parentIndex, subIndex, index)} variant="contained" color="secondary">
+                                            Remove Sub-Sub-Question
+                                        </Button>
+                                    </Box>
+                                ))}
                             </Box>
                         ))}
                     </Box>
                 ))}
+
+
             </form>
         </Container>
     );
