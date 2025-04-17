@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Avatar, MenuItem, Menu, IconButton, Grid } from '@mui/material';
+import { Box, Typography, Avatar, Grid } from '@mui/material';
 import CustomInput from '../../components/CustomBorderedInput';
 import { getProfileDetails } from '../../services/auth/profile';
 import { User } from '../../types/user';
 import CustomDataTable from '../../components/CustomTable/mui';
 import { Link } from 'react-router-dom';
 import { fetchAllScoresWithPagination } from '../../services/results';
-import { MoreVert } from '@mui/icons-material';
+// import { MoreVert } from '@mui/icons-material';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import AnalyticsCard from '../../components/AnalyticsCard';
 
@@ -73,13 +73,13 @@ const ResultPage: React.FC = () => {
   };
 
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  // Add a state to keep track of the selected row ID
-  const [selectedRowId, setSelectedRowId] = React.useState<string | null>(null);
+  // const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  // // Add a state to keep track of the selected row ID
+  // const [selectedRowId, setSelectedRowId] = React.useState<string | null>(null);
 
 
 
-  const isMenuOpen = Boolean(anchorEl); // Update this line
+  // const isMenuOpen = Boolean(anchorEl); // Update this line
 
 
   const columns: GridColDef[] = [
@@ -156,38 +156,38 @@ const ResultPage: React.FC = () => {
 
     // Repeat for other columns...
 
-    {
-      field: 'actions',
-      headerName: 'Actions',
-      flex: 2, // Fixed width
-      renderCell: (params: GridRenderCellParams) => {
-        const handleClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-          // Handle the click to open the menu
-          setAnchorEl(event.currentTarget);
-          setSelectedRowId(params.row.id); // Store the selected row ID
-        };
+    // {
+    //   field: 'actions',
+    //   headerName: 'Actions',
+    //   flex: 2, // Fixed width
+    //   renderCell: (params: GridRenderCellParams) => {
+    //     const handleClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    //       // Handle the click to open the menu
+    //       setAnchorEl(event.currentTarget);
+    //       setSelectedRowId(params.row.id); // Store the selected row ID
+    //     };
 
-        const handleClose = () => {
-          setAnchorEl(null); // Close the menu
-        };
+    //     const handleClose = () => {
+    //       setAnchorEl(null); // Close the menu
+    //     };
 
-        return (
-          <div>
-            <IconButton onClick={handleClick}>
-              <MoreVert />
-            </IconButton>
-            <Menu
-              anchorEl={anchorEl}
-              open={isMenuOpen && selectedRowId === params.row.id} // Check against selectedRowId
-              onClose={handleClose}
-            >
-              <MenuItem>Edit</MenuItem>
-              <MenuItem>Delete</MenuItem>
-            </Menu>
-          </div>
-        );
-      },
-    },
+    //     return (
+    //       <div>
+    //         <IconButton onClick={handleClick}>
+    //           <MoreVert />
+    //         </IconButton>
+    //         <Menu
+    //           anchorEl={anchorEl}
+    //           open={isMenuOpen && selectedRowId === params.row.id} // Check against selectedRowId
+    //           onClose={handleClose}
+    //         >
+    //           <MenuItem>Edit</MenuItem>
+    //           <MenuItem>Delete</MenuItem>
+    //         </Menu>
+    //       </div>
+    //     );
+    //   },
+    // },
   ];
 
 
