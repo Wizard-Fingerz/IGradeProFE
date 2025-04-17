@@ -15,6 +15,7 @@ import { BASE_URL } from "../../constant";
 // const token = localStorage.getItem('token');
 // console.log(token);
 
+const token = localStorage.getItem('token');
 
 export const createStudentUserService = async (payload: any) => {
 
@@ -104,5 +105,23 @@ export const getProfileDetails = async () => {
   } catch (error) {
     console.error('Error getting student me:', error);
     return null; // Return null to indicate failure
+  }
+};
+
+export const fetchDashboardAnalytics = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/app/analytics/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch  details');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching  details:', error);
+    throw error;
   }
 };
