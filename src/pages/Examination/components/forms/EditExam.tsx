@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
-import { TextField, Button, Checkbox, FormControlLabel, Select, MenuItem, CircularProgress, Container, Typography, Box, Avatar, Breadcrumbs, Link } from '@mui/material';
+import { TextField, Button, Checkbox, FormControlLabel, Select, MenuItem, CircularProgress, Container, Typography, Box, Avatar, Breadcrumbs, Link, Autocomplete } from '@mui/material';
 import { BASE_URL } from '../../../../constant';
 import CustomInput from '../../../../components/CustomBorderedInput';
 import { getProfileDetails } from '../../../../services/auth/profile';
@@ -325,22 +325,23 @@ const EditExam: React.FC = () => {
 
                 <Box mb={2} className='flex flex-row gap-4 w-full'>
                     <Box mb={2}>
-                        <Select
-                            className='w-full'
-                            label="Subject"
-                            value={examData.subject}
-                            onChange={(e) => setExamData({ ...examData, subject: e.target.value })}
-                            required
-                            fullWidth
-                            style={{ minWidth: 200 }}
-                        >
-                            <MenuItem value="" disabled>Select a subject</MenuItem>
-                            {subjects.map((subject) => (
-                                <MenuItem key={subject.id} value={subject.id}>
-                                    {subject.name} ({subject.code})
-                                </MenuItem>
-                            ))}
-                        </Select>
+                        <Autocomplete
+                            options={subjects}
+                            getOptionLabel={(option) => `${option.name} (${option.code})`}
+                            value={subjects.find((subject) => subject.id === examData.subject) || null}
+                            onChange={(event, newValue) => {
+                                setExamData({ ...examData, subject: newValue ? newValue.id : '' });
+                            }}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label="Subject"
+                                    required
+                                    fullWidth
+                                    style={{ minWidth: 200 }} // Set a minimum width
+                                />
+                            )}
+                        />
                     </Box>
 
                     <Box mb={2}>
