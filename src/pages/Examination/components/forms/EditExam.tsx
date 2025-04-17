@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
-import { TextField, Button, Checkbox, FormControlLabel, Select, MenuItem, CircularProgress, Container, Typography, Box, Avatar, Breadcrumbs, Link, Autocomplete } from '@mui/material';
+import { TextField, Button, Checkbox, FormControlLabel, CircularProgress, Container, Typography, Box, Avatar, Breadcrumbs, Link, Autocomplete } from '@mui/material';
 import { BASE_URL } from '../../../../constant';
 import CustomInput from '../../../../components/CustomBorderedInput';
 import { getProfileDetails } from '../../../../services/auth/profile';
@@ -329,7 +329,7 @@ const EditExam: React.FC = () => {
                             options={subjects}
                             getOptionLabel={(option) => `${option.name} (${option.code})`}
                             value={subjects.find((subject) => subject.id === examData.subject) || null}
-                            onChange={(event, newValue) => {
+                            onChange={(_event, newValue) => {
                                 setExamData({ ...examData, subject: newValue ? newValue.id : '' });
                             }}
                             renderInput={(params) => (
