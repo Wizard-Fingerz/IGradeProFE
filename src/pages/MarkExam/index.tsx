@@ -93,6 +93,17 @@ const MarkExamPage: React.FC = () => {
       ),
     },
     {
+      field: 'question_number',
+      headerName: 'Question No',
+      flex: 2,
+      type: 'string',
+      renderCell: (params: GridRenderCellParams) => (
+        <Link to={'#'}>
+          <div>{params.value}</div>
+        </Link>
+      ),
+    },
+    {
       field: 'question_text',
       headerName: 'Question',
       flex: 2,
@@ -117,6 +128,17 @@ const MarkExamPage: React.FC = () => {
     {
       field: 'student_score',
       headerName: 'Student Score',
+      flex: 0.5,
+      type: 'string',
+      renderCell: (params: GridRenderCellParams) => (
+        <Link to={'#'}>
+          <div>{params.value}</div>
+        </Link>
+      ),
+    },
+    {
+      field: 'question_score',
+      headerName: 'Question Score',
       flex: 0.5,
       type: 'string',
       renderCell: (params: GridRenderCellParams) => (
@@ -184,7 +206,7 @@ const MarkExamPage: React.FC = () => {
       </Typography>
     </Box>
   );
-  
+
 
   return (
     <Box>
@@ -250,15 +272,19 @@ const MarkExamPage: React.FC = () => {
       </Box>
 
       <Dialog open={isModalOpen} onClose={handleCloseModal} fullWidth maxWidth="sm">
-        <DialogTitle>View Exam Details</DialogTitle>
-        <DialogContent>
+        <DialogTitle>
+          {selectedRowData
+            ? `Candidate ${selectedRowData.candidate_number} answer to Question ${selectedRowData.question_number}`
+            : 'Loading...'}
+        </DialogTitle>     <DialogContent>
           {selectedRowData && (
             <Box mt={1}>
               <Stack spacing={2}>
-                <DetailRow label="Candidate Number" value={selectedRowData.candidate_number} />
                 <DetailRow label="Question" value={selectedRowData.question_text} />
+                <DetailRow label="Examiner Answer" value={selectedRowData.examiner_answer} />
                 <DetailRow label="Student Answer" value={selectedRowData.student_answer} />
                 <DetailRow label="Student Score" value={selectedRowData.student_score} />
+                <DetailRow label="Question Score" value={selectedRowData.question_score} />
                 <DetailRow label="Similarity Score" value={`${selectedRowData.similarity_score_percentage}`} />
               </Stack>
             </Box>
