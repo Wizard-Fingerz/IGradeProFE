@@ -110,26 +110,26 @@ const CreateExam: React.FC = () => {
                 paper_number: examData.paper_number,
                 subject: examData.subject,
                 questions: examData.questions.map((question) => ({
+                    question_number: question.serial, // Use question_number
                     comprehension: question.comprehension,
                     question: question.question,
-                    question_number: question.serial,
                     examiner_answer: question.examiner_answer,
                     question_score: question.question_score,
                     is_optional: question.is_optional,
                     sub_questions: question.sub_questions.map((subQuestion) => ({
+                        question_number: subQuestion.serial, // Use question_number
                         comprehension: subQuestion.comprehension,
                         question: subQuestion.question,
-                        question_number: subQuestion.serial,
                         examiner_answer: subQuestion.examiner_answer,
                         question_score: subQuestion.question_score,
-                        sub_sub_questions: subQuestion.sub_sub_questions.map((subSubQuestion) => ({
+                        is_optional: subQuestion.is_optional,
+                        sub_questions: subQuestion.sub_sub_questions.map((subSubQuestion) => ({
+                            question_number: subSubQuestion.serial, // Use question_number
                             comprehension: subSubQuestion.comprehension,
                             question: subSubQuestion.question,
-                            question_number: subSubQuestion.serial,
                             examiner_answer: subSubQuestion.examiner_answer,
                             question_score: subSubQuestion.question_score,
-                        }
-                        )),
+                        })),
                     })),
                 })),
             };
@@ -151,7 +151,17 @@ const CreateExam: React.FC = () => {
                     total_mark: '',
                     paper_number: '',
                     subject: '',
-                    questions: [{ serial: 1, comprehension: '', question: '', examiner_answer: '', question_score: '', is_optional: false, sub_questions: [] }],
+                    questions: [
+                        {
+                            serial: 1,
+                            comprehension: '',
+                            question: '',
+                            examiner_answer: '',
+                            question_score: '',
+                            is_optional: false,
+                            sub_questions: [],
+                        },
+                    ],
                 });
             } else {
                 console.error('Exam creation failed');
