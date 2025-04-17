@@ -6,7 +6,12 @@ import {
     AccordionSummary,
     useMediaQuery,
     useTheme,
-    Avatar
+    Avatar,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    Stack
 } from '@mui/material';
 import {
     Dashboard as DashboardIcon,
@@ -26,6 +31,7 @@ import SidebarItem from '../SideBarItem/SideBarItem';
 import logo from '../../assets/logo.png';
 import { getProfileDetails } from '../../services/auth/profile';
 import { User } from '../../types/user';
+import AuthApiService from '../../services/auth';
 
 interface SidebarProps {
     isOpen: boolean;
@@ -36,6 +42,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md')); // Use breakpoints for responsiveness
     const [user, setUser] = useState<User | null>(null);
+    const authApiService = new AuthApiService(); // Create an instance of the AuthApiService class
 
     useEffect(() => {
         const fetchStudentMe = async () => {
@@ -48,6 +55,31 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
         };
         fetchStudentMe();
     }, []);
+
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+    const handleSignOutClick = () => {
+        setIsDialogOpen(true); // Open the dialog
+    };
+
+    const handleDialogClose = () => {
+        setIsDialogOpen(false); // Close the dialog
+    };
+
+    const handleConfirmSignOut = async () => {
+        try {
+            await authApiService.logout(); // Call the logout service
+            console.log('User signed out');
+            // Redirect to login or clear user session
+            window.location.href = '/index'; // Example: Redirect to login page
+        } catch (error) {
+            console.error('Error during logout:', error);
+        } finally {
+            setIsDialogOpen(false);
+        }
+    };
+
+
 
     return (
         <Box
@@ -136,18 +168,46 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 
             <Box sx={{ p: 2, width: '100%', textAlign: 'center', position: 'absolute', bottom: 0 }}>
                 {isOpen ? (
-                    <Button fullWidth variant="outlined" color="inherit">
+                    <Button fullWidth variant="outlined" color="inherit" onClick={handleSignOutClick}>
                         Sign Out
                     </Button>
                 ) : (
-                    <IconButton onClick={() => console.log('Logout clicked')}>
+                    <IconButton onClick={handleSignOutClick}>
                         <ExitToAppIcon />
                     </IconButton>
                 )}
                 <Typography variant="caption" color="textSecondary" sx={{ mt: 2 }}>
-                    IGradePro, 2022
+                    IGradePro, {new Date().getFullYear()}
                 </Typography>
             </Box>
+
+
+            {/* Sign Out Confirmation Dialog */}
+            <Dialog open={isDialogOpen} onClose={handleDialogClose} maxWidth="xs" fullWidth>
+                <DialogTitle>
+                    <Stack direction="row" alignItems="center" spacing={1}>
+                        <ExitToAppIcon color="error" />
+                        <Typography variant="h6">Confirm Sign Out</Typography>
+                    </Stack>
+                </DialogTitle>
+
+                <DialogContent>
+                    <Box mt={1}>
+                        <Typography variant="body1">
+                            Are you sure you want to sign out? You will be logged out of your session.
+                        </Typography>
+                    </Box>
+                </DialogContent>
+
+                <DialogActions sx={{ px: 3, pb: 2 }}>
+                    <Button onClick={handleDialogClose} variant="outlined">
+                        Cancel
+                    </Button>
+                    <Button onClick={handleConfirmSignOut} color="error" variant="contained">
+                        Sign Out
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     );
 }
