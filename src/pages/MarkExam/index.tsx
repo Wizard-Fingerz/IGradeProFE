@@ -95,7 +95,7 @@ const MarkExamPage: React.FC = () => {
     {
       field: 'question_number',
       headerName: 'Question No',
-      flex: 2,
+      flex: 0.5,
       type: 'string',
       renderCell: (params: GridRenderCellParams) => (
         <Link to={'#'}>
