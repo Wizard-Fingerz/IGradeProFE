@@ -14,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 interface SubSubQuestion {
+    id?: string; // Added id property
     serial: string;
     comprehension: string;
     question: string;
@@ -23,6 +24,7 @@ interface SubSubQuestion {
 }
 
 interface SubQuestion {
+    id?: string; // Added id property
     serial: string;
     comprehension: string;
     question: string;
@@ -34,6 +36,7 @@ interface SubQuestion {
 }
 
 interface Question {
+    id?: string; // Added id property
     serial: number;
     question_number?: string; // Added question_number property
     comprehension: string;
@@ -45,6 +48,7 @@ interface Question {
 }
 
 interface ExamData {
+    id?: string; // Added id property
     exam_year: string;
     exam_type: string;
     total_mark: string;
@@ -69,7 +73,17 @@ const EditExam: React.FC = () => {
                 examiner_answer: '',
                 question_score: '',
                 is_optional: false,
-                sub_questions: []
+                sub_questions: [
+                    {
+                        serial: '',
+                        comprehension: '',
+                        question: '',
+                        examiner_answer: '',
+                        question_score: '',
+                        is_optional: false,
+                        sub_sub_questions: [], // Ensure this is initialized as an empty array
+                    },
+                ],
             },
         ],
     });
@@ -101,16 +115,20 @@ const EditExam: React.FC = () => {
                 if (response.ok) {
                     const data = await response.json();
                     // Ensure question_number is properly set
+                    // Ensure question_number and id are properly set
                     const formattedData = {
                         ...data,
                         questions: data.questions.map((question: any) => ({
                             ...question,
-                            question_number: question.question_number || question.serial || '', // Ensure question_number is set
+                            id: question.id || null, // Ensure the id is included
+                            question_number: question.question_number || question.serial || '',
                             sub_questions: question.sub_questions.map((subQuestion: any) => ({
                                 ...subQuestion,
+                                id: subQuestion.id || null, // Ensure the id is included
                                 question_number: subQuestion.question_number || subQuestion.serial || '',
-                                sub_sub_questions: subQuestion.sub_questions.map((subSubQuestion: any) => ({
+                                sub_sub_questions: subQuestion?.sub_questions?.map((subSubQuestion: any) => ({
                                     ...subSubQuestion,
+                                    id: subSubQuestion.id || null, // Ensure the id is included
                                     question_number: subSubQuestion.question_number || subSubQuestion.serial || '',
                                 })),
                             })),
@@ -132,7 +150,7 @@ const EditExam: React.FC = () => {
     const updateExam = async () => {
         const token = localStorage.getItem('token');
         setIsSubmitting(true);
-
+    
         try {
             const formattedExamData = {
                 exam_year: examData.exam_year,
@@ -140,46 +158,47 @@ const EditExam: React.FC = () => {
                 total_mark: examData.total_mark,
                 paper_number: examData.paper_number,
                 subject: examData.subject,
-                questions: examData.questions.map((question) => ({
+                questions: examData.questions?.map((question) => ({
+                    id: question.id || null,
                     question_number: question.question_number,
                     comprehension: question.comprehension,
                     question: question.question,
                     examiner_answer: question.examiner_answer,
                     question_score: question.question_score,
                     is_optional: question.is_optional,
-                    sub_questions: question.sub_questions.map((subQuestion) => ({
+                    sub_questions: question.sub_questions?.map((subQuestion) => ({
+                        id: subQuestion.id || null,
                         question_number: subQuestion.question_number,
                         comprehension: subQuestion.comprehension,
                         question: subQuestion.question,
                         examiner_answer: subQuestion.examiner_answer,
                         question_score: subQuestion.question_score,
-                        sub_sub_questions: subQuestion.sub_sub_questions.map((subSubQuestion) => ({
+                        sub_sub_questions: subQuestion.sub_sub_questions?.map((subSubQuestion) => ({
+                            id: subSubQuestion.id || null,
                             question_number: subSubQuestion.question_number,
                             comprehension: subSubQuestion.comprehension,
                             question: subSubQuestion.question,
                             examiner_answer: subSubQuestion.examiner_answer,
                             question_score: subSubQuestion.question_score,
-                        })),
-                    })),
-                })),
+                        })) || [], // Default to an empty array if sub_sub_questions is undefined
+                    })) || [], // Default to an empty array if sub_questions is undefined
+                })) || [], // Default to an empty array if questions is undefined
             };
-
+    
             const response = await fetch(`${BASE_URL}/app/exam-update/${id}/`, {
-                method: 'PUT',
+                method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify(formattedExamData),
             });
-
+    
             if (response.ok) {
                 toast.success('Examination Updated Successfully');
-
             } else {
-                console.error('Exam update failed');
                 const data = await response.json();
-                toast.error(data.detail || 'Exam updation failed. Please try again.');
+                toast.error(data.detail || 'Exam update failed. Please try again.');
             }
         } catch (error) {
             console.error('Network error:', error);
@@ -206,9 +225,18 @@ const EditExam: React.FC = () => {
         fetchSubjects();
     }, []);
 
-    const handleSubSubQuestionChange = (parentIndex: number, subIndex: number, index: number, field: keyof SubSubQuestion, value: any) => {
+    const handleSubSubQuestionChange = (
+        parentIndex: number,
+        subIndex: number,
+        index: number,
+        field: keyof SubSubQuestion,
+        value: any
+    ) => {
         const updatedQuestions = [...examData.questions];
-        (updatedQuestions[parentIndex].sub_questions[subIndex].sub_sub_questions[index] as any)[field] = value;
+        updatedQuestions[parentIndex].sub_questions[subIndex].sub_sub_questions[index] = {
+            ...updatedQuestions[parentIndex].sub_questions[subIndex].sub_sub_questions[index],
+            [field]: value,
+        };
         setExamData({ ...examData, questions: updatedQuestions });
     };
 
@@ -255,8 +283,15 @@ const EditExam: React.FC = () => {
 
     const addSubSubQuestion = (parentIndex: number, subIndex: number) => {
         const updatedQuestions = [...examData.questions];
-        const subSubQuestions = updatedQuestions[parentIndex].sub_questions[subIndex].sub_sub_questions;
-        const newSerial = `${updatedQuestions[parentIndex].sub_questions[subIndex].serial}${subSubQuestions.length + 2}`; // Start with i, ii, iii...
+        const subQuestion = updatedQuestions[parentIndex].sub_questions[subIndex];
+    
+        // Ensure sub_sub_questions is initialized
+        if (!subQuestion.sub_sub_questions) {
+            subQuestion.sub_sub_questions = [];
+        }
+    
+        const subSubQuestions = subQuestion.sub_sub_questions;
+        const newSerial = `${subQuestion.serial}${subSubQuestions.length + 1}`; // Generate a new serial
         const newSubSubQuestion: SubSubQuestion = {
             serial: newSerial,
             comprehension: '',
@@ -264,6 +299,7 @@ const EditExam: React.FC = () => {
             examiner_answer: '',
             question_score: '',
         };
+    
         subSubQuestions.push(newSubSubQuestion);
         setExamData({ ...examData, questions: updatedQuestions });
     };
