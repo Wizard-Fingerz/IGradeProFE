@@ -19,6 +19,7 @@ interface SubSubQuestion {
     question: string;
     examiner_answer: string;
     question_score: string;
+    question_number?: string; // Added question_number property
 }
 
 interface SubQuestion {
@@ -29,10 +30,12 @@ interface SubQuestion {
     question_score: string;
     is_optional: boolean;
     sub_sub_questions: SubSubQuestion[]; // Add this property
+    question_number?: string; // Added question_number property
 }
 
 interface Question {
     serial: number;
+    question_number?: string; // Added question_number property
     comprehension: string;
     question: string;
     examiner_answer: string;
@@ -97,7 +100,25 @@ const EditExam: React.FC = () => {
                 });
                 if (response.ok) {
                     const data = await response.json();
-                    setExamData(data);
+                    // Ensure question_number is properly set
+                    const formattedData = {
+                        ...data,
+                        questions: data.questions.map((question: any) => ({
+                            ...question,
+                            question_number: question.question_number || question.serial || '', // Ensure question_number is set
+                            sub_questions: question.sub_questions.map((subQuestion: any) => ({
+                                ...subQuestion,
+                                question_number: subQuestion.question_number || subQuestion.serial || '',
+                                sub_sub_questions: subQuestion.sub_questions.map((subSubQuestion: any) => ({
+                                    ...subSubQuestion,
+                                    question_number: subSubQuestion.question_number || subSubQuestion.serial || '',
+                                })),
+                            })),
+                        })),
+                    };
+
+                    setExamData(formattedData);
+
                 } else {
                     console.error('Failed to fetch exam data');
                 }
@@ -120,26 +141,25 @@ const EditExam: React.FC = () => {
                 paper_number: examData.paper_number,
                 subject: examData.subject,
                 questions: examData.questions.map((question) => ({
+                    question_number: question.question_number,
                     comprehension: question.comprehension,
                     question: question.question,
-                    question_number: question.serial,
                     examiner_answer: question.examiner_answer,
                     question_score: question.question_score,
                     is_optional: question.is_optional,
                     sub_questions: question.sub_questions.map((subQuestion) => ({
+                        question_number: subQuestion.question_number,
                         comprehension: subQuestion.comprehension,
                         question: subQuestion.question,
-                        question_number: subQuestion.serial,
                         examiner_answer: subQuestion.examiner_answer,
                         question_score: subQuestion.question_score,
                         sub_sub_questions: subQuestion.sub_sub_questions.map((subSubQuestion) => ({
+                            question_number: subSubQuestion.question_number,
                             comprehension: subSubQuestion.comprehension,
                             question: subSubQuestion.question,
-                            question_number: subSubQuestion.serial,
                             examiner_answer: subSubQuestion.examiner_answer,
                             question_score: subSubQuestion.question_score,
-                        }
-                        )),
+                        })),
                     })),
                 })),
             };
@@ -388,12 +408,13 @@ const EditExam: React.FC = () => {
                     </Box>
                 </Box>
 
-                {examData.questions.map((question, parentIndex) => (
+                {examData.questions?.map((question, parentIndex) => (
                     <Box key={parentIndex} mb={2} p={2} border={1} borderRadius={4} className='flex flex-col gap-4'>
                         <TextField
                             label="Question Number"
-                            value={question.serial}
-                            onChange={(e) => handleQuestionChange(parentIndex, 'serial', e.target.value)}
+                            value={question.question_number || ''}
+                            onChange={(e) => handleQuestionChange(parentIndex, 'question_number', e.target.value)}
+
                             fullWidth
                         />
                         <FormControlLabel
@@ -443,12 +464,13 @@ const EditExam: React.FC = () => {
                         <Button onClick={() => removeQuestion(parentIndex)} variant="contained" color="secondary">
                             Remove Question
                         </Button>
-                        {question.sub_questions.map((subQuestion, subIndex) => (
+                        {question.sub_questions?.map((subQuestion, subIndex) => (
                             <Box key={subIndex} mt={2} p={2} border={1} borderRadius={4} className='flex flex-col gap-4'>
                                 <TextField
                                     label="Sub-Question Number"
-                                    value={subQuestion.serial}
-                                    onChange={(e) => handleSubQuestionChange(parentIndex, subIndex, 'serial', e.target.value)}
+                                    value={subQuestion.question_number || ''}
+                                    onChange={(e) => handleSubQuestionChange(parentIndex, subIndex, 'question_number', e.target.value)}
+
                                     fullWidth
                                 />
                                 <TextField
@@ -490,12 +512,12 @@ const EditExam: React.FC = () => {
                                     Remove Sub-Question
                                 </Button>
 
-                                {subQuestion.sub_sub_questions.map((subSubQuestion, index) => (
+                                {subQuestion.sub_sub_questions?.map((subSubQuestion, index) => (
                                     <Box key={index} mt={2} p={2} border={1} borderRadius={4} className='flex flex-col gap-4'>
                                         <TextField
                                             label="Sub-Sub-Question Number"
-                                            value={subSubQuestion.serial}
-                                            onChange={(e) => handleSubSubQuestionChange(parentIndex, subIndex, index, 'serial', e.target.value)}
+                                            value={subSubQuestion.question_number || ''}
+                                            onChange={(e) => handleSubSubQuestionChange(parentIndex, subIndex, index, 'question_number', e.target.value)}
                                             fullWidth
                                         />
                                         <TextField
