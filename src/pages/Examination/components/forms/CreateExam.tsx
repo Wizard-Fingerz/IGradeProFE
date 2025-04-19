@@ -476,7 +476,7 @@ const CreateExam: React.FC = () => {
                                 />
                                 <TextField
                                     label="Examiner Answer"
-                                    value={question.examiner_answer}
+                                    value={subQuestion.examiner_answer}
                                     onChange={(e) => handleSubQuestionChange(parentIndex, subIndex, 'examiner_answer', e.target.value)}
                                     fullWidth
                                     multiline
@@ -485,7 +485,7 @@ const CreateExam: React.FC = () => {
                                 <TextField
                                     label="Question Score"
                                     type="number"
-                                    value={question.question_score}
+                                    value={subQuestion.question_score}
                                     onChange={(e) => handleSubQuestionChange(parentIndex, subIndex, 'question_score', Math.max(0, Number(e.target.value)))}
                                     inputProps={{ min: 0 }}
                                     fullWidth
@@ -523,7 +523,7 @@ const CreateExam: React.FC = () => {
                                         />
                                         <TextField
                                             label="Examiner Answer"
-                                            value={question.examiner_answer}
+                                            value={subSubQuestion.examiner_answer}
                                             onChange={(e) => handleSubSubQuestionChange(parentIndex, subIndex, index, 'examiner_answer', e.target.value)}
                                             fullWidth
                                             multiline
@@ -532,7 +532,7 @@ const CreateExam: React.FC = () => {
                                         <TextField
                                             label="Question Score"
                                             type="number"
-                                            value={question.question_score}
+                                            value={subSubQuestion.question_score}
                                             onChange={(e) => handleSubSubQuestionChange(parentIndex, subIndex, index, 'question_score', Math.max(0, Number(e.target.value)))}
                                             inputProps={{ min: 0 }}
                                             fullWidth
