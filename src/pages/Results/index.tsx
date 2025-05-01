@@ -153,6 +153,17 @@ const ResultPage: React.FC = () => {
         </Link>
       ),
     },
+    {
+      field: 'exam_total_mark',
+      headerName: 'Total Mark',
+      flex: 2,
+      type: 'string',
+      renderCell: (params: GridRenderCellParams) => (
+        <Link to={'#'}>
+          <div>{params.value}</div>
+        </Link>
+      ),
+    },
 
     // Repeat for other columns...
 
