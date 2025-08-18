@@ -63,7 +63,7 @@ const OverviewTab: React.FC = () => {
       <Grid container spacing={4} sx={{ mb: 5 }}>
         {/* Analytics Cards */}
         <Grid item xs={12} md={3}>
-          <AnalyticsCard title="Total Students" count={analytics.totalStudents} />
+          <AnalyticsCard title="Total Candidates" count={analytics.totalStudents} />
         </Grid>
         <Grid item xs={12} md={3}>
           <AnalyticsCard title="Total Subjects" count={analytics.totalSubjects} />
