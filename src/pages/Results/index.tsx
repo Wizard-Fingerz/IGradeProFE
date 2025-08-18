@@ -84,7 +84,7 @@ const ResultPage: React.FC = () => {
 
   const columns: GridColDef[] = [
     {
-      field: 'student_detials',
+      field: 'examination_number',
       headerName: 'Candidate',
       flex: 2,
       type: 'string', // Specify the type here
@@ -108,28 +108,28 @@ const ResultPage: React.FC = () => {
         </Link>
       ),
     },
-    {
-      field: 'grade',
-      headerName: 'Grade',
-      flex: 2,
-      type: 'string',
-      renderCell: (params: GridRenderCellParams) => (
-        <Link to={'#'}>
-          <div>{params.value}</div>
-        </Link>
-      ),
-    },
-    {
-      field: 'percentage_score',
-      headerName: 'Percentage Score',
-      flex: 2,
-      type: 'string',
-      renderCell: (params: GridRenderCellParams) => (
-        <Link to={'#'}>
-          <div>{params.value}</div>
-        </Link>
-      ),
-    },
+    // {
+    //   field: 'grade',
+    //   headerName: 'Grade',
+    //   flex: 2,
+    //   type: 'string',
+    //   renderCell: (params: GridRenderCellParams) => (
+    //     <Link to={'#'}>
+    //       <div>{params.value}</div>
+    //     </Link>
+    //   ),
+    // },
+    // {
+    //   field: 'percentage_score',
+    //   headerName: 'Percentage Score',
+    //   flex: 2,
+    //   type: 'string',
+    //   renderCell: (params: GridRenderCellParams) => (
+    //     <Link to={'#'}>
+    //       <div>{params.value}</div>
+    //     </Link>
+    //   ),
+    // },
 
     {
       field: 'exam_score',

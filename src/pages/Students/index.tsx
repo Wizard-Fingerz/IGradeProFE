@@ -89,7 +89,7 @@ const StudentPage: React.FC = () => {
   const columns: GridColDef[] = [
     {
       field: 'username',
-      headerName: 'Username',
+      headerName: 'Candidate',
       flex: 1,
       renderCell: (params: GridRenderCellParams) => (
         <Link to={`/students/details/view/${params.row.id}`}>
@@ -212,7 +212,7 @@ const StudentPage: React.FC = () => {
             marginBottom: { xs: 2, md: 0 }, // Margin bottom on small screens
           }}
         >
-          Students
+          Candidate
         </Typography>
 
 
@@ -246,7 +246,7 @@ const StudentPage: React.FC = () => {
         {/* Analytics Cards */}
 
         <Grid item xs={12} md={3}>
-          <AnalyticsCard title="Total Students" count={dataCount} />
+          <AnalyticsCard title="Total Candidate" count={dataCount} />
         </Grid>
 
       </Grid>

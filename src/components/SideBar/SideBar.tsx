@@ -153,7 +153,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
                 <Divider />
                 <SidebarItem icon={<BookIcon />} label="Subjects" isOpen={isOpen} to={'/subjects'} />
                 <Divider />
-                <SidebarItem icon={<PeopleIcon />} label="Students" isOpen={isOpen} to={'/students'} />
+                <SidebarItem icon={<PeopleIcon />} label="Candidates" isOpen={isOpen} to={'/students'} />
                 <Divider />
                 <SidebarItem icon={<QuestionAnswerIcon />} label="Questions" isOpen={isOpen} to={'/questions'} />
                 <Divider />

@@ -82,7 +82,7 @@ const MarkExamPage: React.FC = () => {
 
   const columns: GridColDef[] = [
     {
-      field: 'candidate_number',
+      field: 'examination_number',
       headerName: 'Candidate Number',
       flex: 1,
       type: 'string',
@@ -271,7 +271,7 @@ const MarkExamPage: React.FC = () => {
         />
       </Box>
 
-      <Dialog open={isModalOpen} onClose={handleCloseModal} fullWidth maxWidth="sm">
+      <Dialog open={isModalOpen} onClose={handleCloseModal} fullWidth maxWidth="md">
         <DialogTitle>
           {selectedRowData
             ? `Candidate ${selectedRowData.candidate_number} answer to Question ${selectedRowData.question_number}`
@@ -281,11 +281,12 @@ const MarkExamPage: React.FC = () => {
             <Box mt={1}>
               <Stack spacing={2}>
                 <DetailRow label="Question" value={selectedRowData.question_text} />
+                <DetailRow label="Comprehension" value={selectedRowData.exam_comprehension} />
                 <DetailRow label="Examiner Answer" value={selectedRowData.examiner_answer} />
                 <DetailRow label="Student Answer" value={selectedRowData.student_answer} />
                 <DetailRow label="Student Score" value={selectedRowData.student_score} />
                 <DetailRow label="Question Score" value={selectedRowData.question_score} />
-                <DetailRow label="Similarity Score" value={`${selectedRowData.similarity_score_percentage}`} />
+                {/* <DetailRow label="Similarity Score" value={`${selectedRowData.similarity_score_percentage}`} /> */}
               </Stack>
             </Box>
           )}
