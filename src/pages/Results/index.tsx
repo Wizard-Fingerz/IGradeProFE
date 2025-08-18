@@ -85,7 +85,7 @@ const ResultPage: React.FC = () => {
   const columns: GridColDef[] = [
     {
       field: 'examination_number',
-      headerName: 'Candidate',
+      headerName: 'Candidates',
       flex: 2,
       type: 'string', // Specify the type here
       renderCell: (params: GridRenderCellParams) => (
