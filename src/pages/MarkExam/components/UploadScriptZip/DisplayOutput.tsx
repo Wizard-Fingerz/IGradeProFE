@@ -61,17 +61,26 @@ const DisplayOutput: React.FC = () => {
 
     return (
         <div className="">
-            <Typography variant="h4" className="mb-4 text-center">
+            <Typography variant="h5" className="mb-4 text-center">
                 Uploaded Scripts and Extracted Text
             </Typography>
-            <Box className="mb-4">
+            <Box
+                className="mb-4"
+                sx={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: 2,
+                    alignItems: 'center',
+                }}
+            >
                 <TextField
                     label="Subject"
                     name="subject"
                     value={filters.subject}
                     onChange={handleFilterChange}
                     variant="outlined"
-                    className="mr-2"
+                    size="small"
+                    sx={{ minWidth: 160 }}
                 />
                 <TextField
                     label="Date Uploaded"
@@ -80,7 +89,8 @@ const DisplayOutput: React.FC = () => {
                     value={filters.date}
                     onChange={handleFilterChange}
                     variant="outlined"
-                    className="mr-2"
+                    size="small"
+                    sx={{ minWidth: 160 }}
                     InputLabelProps={{
                         shrink: true,
                     }}
@@ -91,9 +101,16 @@ const DisplayOutput: React.FC = () => {
                     value={filters.student}
                     onChange={handleFilterChange}
                     variant="outlined"
-                    className="mr-2"
+                    size="small"
+                    sx={{ minWidth: 160 }}
                 />
-                <Button variant="contained" color="primary" onClick={() => setFilters({ subject: '', date: '', student: '' })}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => setFilters({ subject: '', date: '', student: '' })}
+                    size="small"
+                    sx={{ height: 40 }}
+                >
                     Clear Filters
                 </Button>
             </Box>
