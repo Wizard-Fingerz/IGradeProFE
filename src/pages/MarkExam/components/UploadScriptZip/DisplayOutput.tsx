@@ -11,18 +11,27 @@ interface Page {
 
 interface ScriptOutput {
     id: number;
-    subject: string;
+    subject_name: string;
+    candidate_number: string;
     uploaded_at: string;
     pages: Page[];
+}
+
+interface Filters {
+    subject: string;
+    date: string;
+    student: string;
+    candidate_number: string;
 }
 
 const DisplayOutput: React.FC = () => {
     const [output, setOutput] = useState<ScriptOutput[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
-    const [filters, setFilters] = useState({
+    const [filters, setFilters] = useState<Filters>({
         subject: '',
         date: '',
-        student: ''
+        student: '',
+        candidate_number: '',
     });
 
     useEffect(() => {
@@ -51,11 +60,14 @@ const DisplayOutput: React.FC = () => {
         });
     };
 
+    // Fix filter logic: 
+    // - Use script.candidate_number for student filter
+    // - Remove page_number filter (not present in filters)
     const filteredOutput = output?.filter(script => {
         return (
-            (filters.subject === '' || script.subject.includes(filters.subject)) &&
-            (filters.date === '' || new Date(script.uploaded_at).toLocaleDateString().includes(filters.date)) &&
-            (filters.student === '' || script.pages.some(page => page.extracted_text.includes(filters.student)))
+            (filters.subject === '' || script.subject_name.toLowerCase().includes(filters.subject.toLowerCase())) &&
+            (filters.candidate_number === '' || script.candidate_number.toLowerCase().includes(filters.candidate_number.toLowerCase())) &&
+            (filters.date === '' || new Date(script.uploaded_at).toISOString().slice(0, 10) === filters.date)
         );
     });
 
@@ -96,9 +108,9 @@ const DisplayOutput: React.FC = () => {
                     }}
                 />
                 <TextField
-                    label="Student"
-                    name="student"
-                    value={filters.student}
+                    label="Candidate Number"
+                    name="candidate_number"
+                    value={filters.candidate_number}
                     onChange={handleFilterChange}
                     variant="outlined"
                     size="small"
@@ -107,7 +119,7 @@ const DisplayOutput: React.FC = () => {
                 <Button
                     variant="contained"
                     color="primary"
-                    onClick={() => setFilters({ subject: '', date: '', student: '' })}
+                    onClick={() => setFilters({ subject: '', date: '', student: '', candidate_number: '' })}
                     size="small"
                     sx={{ height: 40 }}
                 >
@@ -124,7 +136,7 @@ const DisplayOutput: React.FC = () => {
                         <Card key={script.id} className="shadow-lg">
                             <CardContent>
                                 <Typography variant="h5" className="font-semibold mb-2">
-                                    {script.subject}
+                                    {script.subject_name} for {script.candidate_number}
                                 </Typography>
                                 <Typography variant="body2" color="textSecondary" className="mb-2">
                                     Uploaded at: {new Date(script.uploaded_at).toLocaleString()}
