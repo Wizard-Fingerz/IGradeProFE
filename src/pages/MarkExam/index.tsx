@@ -18,7 +18,7 @@ const MarkExamPage: React.FC = () => {
   const [, setHasPreviousPage] = React.useState(false);
   const [networkError, setNetworkError] = React.useState(false);
   const [dataCount, setDataCount] = React.useState(0);
-  const [paginationModel, setPaginationModel] = React.useState({ pageSize: 15, page: 0, currentPage: 1 });
+  const [paginationModel, setPaginationModel] = React.useState({ pageSize: 25, page: 0, currentPage: 1 });
   const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -202,7 +202,7 @@ const MarkExamPage: React.FC = () => {
         {label}
       </Typography>
       <Typography variant="body1" color="text.primary">
-        {value || <em>N/A</em>}
+        {value}
       </Typography>
     </Box>
   );
@@ -284,8 +284,22 @@ const MarkExamPage: React.FC = () => {
                 <DetailRow label="Comprehension" value={selectedRowData.exam_comprehension} />
                 <DetailRow label="Examiner Answer" value={selectedRowData.examiner_answer} />
                 <DetailRow label="Student Answer" value={selectedRowData.student_answer} />
-                <DetailRow label="Student Score" value={selectedRowData.student_score} />
-                <DetailRow label="Question Score" value={selectedRowData.question_score} />
+                <DetailRow
+                  label="Student Score"
+                  value={
+                    selectedRowData.student_score === null || selectedRowData.student_score === undefined
+                      ? 'NA'
+                      : selectedRowData.student_score
+                  }
+                />
+                <DetailRow
+                  label="Question Score"
+                  value={
+                    selectedRowData.question_score === null || selectedRowData.question_score === undefined
+                      ? '0'
+                      : selectedRowData.question_score
+                  }
+                />
                 {/* <DetailRow label="Similarity Score" value={`${selectedRowData.similarity_score_percentage}`} /> */}
               </Stack>
             </Box>
