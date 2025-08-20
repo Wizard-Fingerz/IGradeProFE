@@ -18,7 +18,7 @@ const MarkExamPage: React.FC = () => {
   const [, setHasPreviousPage] = React.useState(false);
   const [networkError, setNetworkError] = React.useState(false);
   const [dataCount, setDataCount] = React.useState(0);
-  const [paginationModel, setPaginationModel] = React.useState({ pageSize: 25, page: 0, currentPage: 1 });
+  const [paginationModel, setPaginationModel] = React.useState({ pageSize: 100, page: 0, currentPage: 1 });
   const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
