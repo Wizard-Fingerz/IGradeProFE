@@ -101,7 +101,7 @@ const EditQuestionModal = ({ questionID, btnText }: { questionID?: number; btnTe
                 <p>{btnText}</p>
             </button>
 
-            <Dialog maxWidth="sm" fullWidth open={modalOpen} onClose={() => setModalOpen(false)}>
+            <Dialog maxWidth="md" fullWidth open={modalOpen} onClose={() => setModalOpen(false)}>
                 <DialogTitle>
                     <Box sx={{ justifyContent: 'space-between', display: 'flex' }}>
                         <h1 className='text-xl font-semibold'>Edit Question</h1>
@@ -135,7 +135,7 @@ const EditQuestionModal = ({ questionID, btnText }: { questionID?: number; btnTe
                                         value={questionDetails.comprehension}
                                         onChange={(e) => handleInputChange('comprehension', e.target.value)}
                                         multiline
-                                        rows={2}
+                                        rows={10}
                                     />
                                     <TextField
                                         fullWidth
@@ -153,7 +153,7 @@ const EditQuestionModal = ({ questionID, btnText }: { questionID?: number; btnTe
                                         value={questionDetails.examiner_answer}
                                         onChange={(e) => handleInputChange('examiner_answer', e.target.value)}
                                         multiline
-                                        rows={2}
+                                        rows={10}
                                     />
                                     <TextField
                                         fullWidth

@@ -418,7 +418,7 @@ const CreateExam: React.FC = () => {
                             onChange={(e) => handleQuestionChange(parentIndex, 'comprehension', e.target.value)}
                             fullWidth
                             multiline
-                            rows={2}
+                            rows={10}
                         />
                         <TextField
                             label="Question"
@@ -434,7 +434,7 @@ const CreateExam: React.FC = () => {
                             onChange={(e) => handleQuestionChange(parentIndex, 'examiner_answer', e.target.value)}
                             fullWidth
                             multiline
-                            rows={2}
+                            rows={10}
                         />
                         <TextField
                             label="Question Score"
@@ -464,7 +464,7 @@ const CreateExam: React.FC = () => {
                                     onChange={(e) => handleSubQuestionChange(parentIndex, subIndex, 'comprehension', e.target.value)}
                                     fullWidth
                                     multiline
-                                    rows={2}
+                                    rows={10}
                                 />
                                 <TextField
                                     label="Sub-Question"
@@ -480,7 +480,7 @@ const CreateExam: React.FC = () => {
                                     onChange={(e) => handleSubQuestionChange(parentIndex, subIndex, 'examiner_answer', e.target.value)}
                                     fullWidth
                                     multiline
-                                    rows={2}
+                                    rows={10}
                                 />
                                 <TextField
                                     label="Question Score"
@@ -511,7 +511,7 @@ const CreateExam: React.FC = () => {
                                             onChange={(e) => handleSubSubQuestionChange(parentIndex, subIndex, index, 'comprehension', e.target.value)}
                                             fullWidth
                                             multiline
-                                            rows={2}
+                                            rows={10}
                                         />
                                         <TextField
                                             label="Sub-Sub-Question"
@@ -527,7 +527,7 @@ const CreateExam: React.FC = () => {
                                             onChange={(e) => handleSubSubQuestionChange(parentIndex, subIndex, index, 'examiner_answer', e.target.value)}
                                             fullWidth
                                             multiline
-                                            rows={2}
+                                            rows={10}
                                         />
                                         <TextField
                                             label="Question Score"
